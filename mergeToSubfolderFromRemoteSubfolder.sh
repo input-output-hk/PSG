@@ -37,8 +37,8 @@ if [ "${isOkToContinue}" == "Up-to-date" ]; then
 
     git subtree add --prefix=${TARGET_PATH} --squash merging/${UNIQUE_TAG}
 
-    #git branch -D ${TRACKING_BRANCH} merging/${UNIQUE_TAG}
-    #git remote rm ${NEW_REMOTE}
+    git branch -D ${TRACKING_BRANCH} merging/${UNIQUE_TAG}
+    git remote rm ${NEW_REMOTE}
 
 else 
     echo "Branch not up to date"
