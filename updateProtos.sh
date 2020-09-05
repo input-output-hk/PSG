@@ -12,5 +12,6 @@ TARGET_PATH="protos/cardano-metadata-service/protobuf"
 
 EXTERNAL_REPO_PATH="store-and-hash-service/src/main/protobuf"
 UNIQUE_TAG="storeandhash-service"
+TARGET_PATH="protos/store-and-hash-service/protobuf"
 
-mergeToSubfolderFromRemoteSubfolder.sh ${EXTERNAL_REPO} ${EXTERNAL_REPO_BRANCH} ${UNIQUE_TAG} ${EXTERNAL_REPO_PATH} ${TARGET_BRANCH} ${TARGET_PATH}
+./mergeToSubfolderFromRemoteSubfolder.sh ${EXTERNAL_REPO} ${EXTERNAL_REPO_BRANCH} ${UNIQUE_TAG} ${EXTERNAL_REPO_PATH} ${TARGET_BRANCH} ${TARGET_PATH}
