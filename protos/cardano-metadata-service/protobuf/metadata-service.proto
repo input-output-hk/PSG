@@ -1,0 +1,53 @@
+//#service-request-reply
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "iog.psg.service.metadata";
+option java_outer_classname = "MetadataService";
+
+
+service MetadataService {
+
+    rpc SubmitMetadata (MetadataMessage) returns (stream SubmitMetadataResult);
+    rpc GetMetadataStatus (MetadataTxId) returns (SubmitMetadataResult);
+}
+
+message MetadataTxId {
+    string txId = 1;
+    string clientId = 2;
+}
+
+
+message MetadataMessage {
+   map<string, string> metadata = 1;
+   int32 untilDepth = 2;
+   string clientId = 3;
+}
+
+message SubmitMetadataResult {
+    google.protobuf.StringValue problem = 1;
+    TxStatus txStatus= 2;
+    map<string, string> metadata = 3;
+}
+
+enum TxState {
+    Pending = 0;
+    InLedger = 1;
+}
+
+message TxStatus {
+    string txId = 1;
+    TxState txState = 2;
+    google.protobuf.Int64Value depth = 3;
+    AtBlock atBlock = 4;
+}
+
+message AtBlock {
+    int64 height = 1;
+    int32 epochNumber = 2;
+    int32 slotNumber = 3;
+    google.protobuf.Timestamp insertedAtTimestamp = 4;
+}
