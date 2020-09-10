@@ -39,6 +39,7 @@ if [ "${isOkToContinue}" == "Up-to-date" ]; then
 
     git branch -D ${TRACKING_BRANCH} merging/${UNIQUE_TAG}
     git remote rm ${NEW_REMOTE}
+    git push
 
 else 
     echo "Branch not up to date"
