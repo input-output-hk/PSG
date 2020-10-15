@@ -1,0 +1,27 @@
+//#service-request-reply
+syntax = "proto3";
+
+package iog.psg.service.metadata;
+
+option java_multiple_files = true;
+option java_outer_classname = "MetadataService";
+option java_package = "iog.psg.service.metadata";
+
+import "google/protobuf/wrappers.proto";
+import "tx_status.proto";
+
+service MetadataService {
+  rpc SubmitMetadata(SubmitMetadataRequest) returns (stream SubmitMetadataResponse);
+}
+
+message SubmitMetadataRequest {
+  string metadata = 1;
+  int32 until_depth = 2;
+  string client_id = 3;
+  string tx_id = 4; //For restarts, will start polling
+}
+
+message SubmitMetadataResponse {
+  google.protobuf.StringValue problem = 1;
+  TxStatus tx_status = 2;
+}
