@@ -1,2 +1,5 @@
 # PSG
-Professional Service Group: Service API Definitions and Binary Artefacts Repository 
+Professional Services Group Repository: 
+* Service API Definitions
+* Binary Artifacts Repository
+* Documentation
