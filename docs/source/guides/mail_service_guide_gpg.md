@@ -1,18 +1,18 @@
 # Mail Service Usage Guide (gpg command line)
 
-It is possible to send encrypted messages with attachment to Mail Service for further storing it in Cardano blockchain.
+It is possible to send encrypted messages with attachments to Mail Service for further storing it in the Cardano blockchain.
 
 Please, follow prerequisites and configuration steps.
 
 ## Prerequisites
 
-To save transaction (with message and attachement) you will need: 
+To save transaction (with message and attachment), you will need:
 
 * [gpg](https://gpgtools.org/) tool
 
-* User's public / private key pair that is [generated and saved to local keychain](#how-to-generate-public--private-key-pair)  
+* User's public/private key pair that is [generated and saved to local keychain](#how-to-generate-public-private-key-pair)
 
-* Puchased package at PSG Self Service UI
+* Purchased package at PSG Self Service UI
 
 * API Token - generated at PSG Self Service UI
 
@@ -20,11 +20,11 @@ To save transaction (with message and attachement) you will need:
 
 ## Steps
 
-1. Create new user or login with existing one to Self Service UI
+1. Create a new user or login with an existing one to Self Service UI
 
-2. Add your email address, public pgp key on the PGP page and save
+2. Add your email address, public PGP key on the PGP page and save
 
-3. Form a message to sent according to specific [format](#email-message-format)
+3. Form a message to send according to specific [format](#email-message-format)
 
 4. [Encrypt message](#how-to-encrypt-messages-with-gpg-tool) with recipient's public key (mandatory)
 
@@ -32,9 +32,9 @@ To save transaction (with message and attachement) you will need:
 
 6. Sent email to recipient@mail.com
 
-7. Wait for reply message (with link to the file on AWS S3 and link to transaction in Cardano Explorer)
+7. Wait for reply message (with link to the file on AWS S3 and link to the transaction in Cardano Explorer)
 
-In case of success, you will get message in reply:
+In case of success, you will get a message in reply:
 
 ``` text
 Your message EMAIL_SUBJECT Thu Apr 29 11:56:34 GMT 2021 was processed successfully.
@@ -59,11 +59,11 @@ We could not process your message, subject: EMAIL_SUBJECT, sent date: Wed Apr 21
     METADATA=Your desired information to be stored in blockchain
 ```
 
-PLAINTEXT_REPLY=true - reply from mail service will be as plain text
+**PLAINTEXT_REPLY=true** - PSG Mail Service will send the reply in plain text
 
-PLAINTEXT_REPLY=false - reply from mail service will be ecnrypted with user's public key
+**PLAINTEXT_REPLY=false** - PSG Mail Service will send the reply encrypted by the recipient key
 
-## How to encrypt messages with gpg tool
+## How to encrypt messages with the gpg tool
 
 ``` bash
 gpg --encrypt --sign --armor -u your@mail.com -r recipient@mail.com your_file.txt
@@ -73,15 +73,15 @@ gpg --encrypt --sign --armor -u your@mail.com -r recipient@mail.com your_file.tx
 gpg --encrypt --sign --armor -u your@mail.com -r recipient@mail.com your_attachment.txt
 ```
 
-### How to generate public / private key-pair
+### How to generate public/private key-pair
 
 ``` bash
 gpg --gen-key
 ```
 
-It is recommended to use RSA 4096 (bit) keys.
+Recommended algorithm for keys is RSA 4096-bit.
 
-Do not forget to specify **your email** during key generation process
+Do not forget to specify **your email** during key generation.
 
 ### How to add recipient public key to the local keychain
 
