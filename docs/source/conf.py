@@ -116,10 +116,10 @@ html_logo = "../.sphinx/logo.png"
 
 html_context = {
   "display_github": True, # Add 'Edit on Github' link instead of 'View page source'
-  "github_user": "cardano-foundation",
-  "github_repo": "docs-cardano-org",
-  "github_version": "main",
-  "conf_py_path": "/",
+  "github_user": "input-output-hk",
+  "github_repo": "PSG",
+  "github_version": "develop",
+  "conf_py_path": "/docs/source/",
   "source_suffix": source_suffix,
 }
 
