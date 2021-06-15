@@ -35,7 +35,14 @@
 
 10. **Now, you are ready to use PSG Services!**
 
-### PSG Services package options:
-* Default: For every 5 ADA, you get 20 calls for 30 days.
+### PSG Services package description:
+The package operates by allowing a certain maximum number of calls which expire after a certain time.  
+
+So for example for 5 ADA you might get 20 calls, expiring after 30 days.  
+- If you use up all calls within the time allowed you will need to purchase more 
+- If the allowed time expires then any remaining calls are lost
+- If you purchase a second 'package' before the first has expired then any surplus calls are added to the new amount
+
+E.g., if you have 3 calls that expire on May 1, then after depositing 5 ADA you will have 23 calls that will expire on May 31.
 
 

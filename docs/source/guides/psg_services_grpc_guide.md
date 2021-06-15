@@ -1,90 +1,26 @@
 # PSG Services - gRPC API guide
 
-It is possible to send encrypted messages with attachments to Mail Service for further storing it in the Cardano blockchain.
+### **Steps:**
+1. Get proto files from [PSG repository](https://github.com/input-output-hk/PSG/tree/master/protos)
+2. Generate gRPC clients with any suitable [libraries](https://grpc.io/docs/languages/), e.g. [akka-grpc](https://doc.akka.io/docs/akka-grpc/current/index.html) or [scalapb](https://github.com/scalapb/ScalaPB)
+3. Implement clients for one of the chosen services: Metadata service, AuthMailMetadata service, StoreAndHash service
 
-Please, follow prerequisites and configuration steps.
+### **Credentials**
 
-## Prerequisites
+**Current version of PSG Services is using Cardano testnet**.  
 
-To save transaction (with message and attachment), you will need:
+- You **can specify any client_id or api_token** in gRPC requests. (request validation disabled)
 
-* [gpg](https://gpgtools.org/) tool
+**When Cardano mainnet version will be turned on - you may need to specify your credentials:**
+- **client_id:** your username from [PSG Self Serve UI](https://prod.iog.services)
+- **api_token:** token, generated at [API Token](https://prod.iog.services/apitokens) page
 
-* User's public/private key pair that is [generated and saved to local keychain](#how-to-generate-public-private-key-pair)
+### **Connection details:**
 
-* Purchased package at PSG Self Service UI
+Cardano testnet:
+- **host:** http://ec2-3-135-64-128.us-east-2.compute.amazonaws.com
+- **port:** 2000
 
-* API Token - generated at PSG Self Service UI
-
-* Recipient's public key [is added to local keychain](#how-to-add-recipient-public-key-to-the-local-keychain)
-
-## Steps
-
-1. Create a new user or login with an existing one to Self Service UI
-
-2. Add your email address, public PGP key on the PGP page and save
-
-3. Form a message to send according to specific [format](#email-message-format)
-
-4. [Encrypt message](#how-to-encrypt-messages-with-gpg-tool) with recipient's public key (mandatory)
-
-5. [Encrypt attachment](#how-to-encrypt-messages-with-gpg-tool) with recipient's public key
-
-6. Sent email to recipient@mail.com
-
-7. Wait for reply message (with link to the file on AWS S3 and link to the transaction in Cardano Explorer)
-
-In case of success, you will get a message in reply:
-
-``` text
-Your message EMAIL_SUBJECT Thu Apr 29 11:56:34 GMT 2021 was processed successfully.
-
-Transaction: https://explorer.cardano.org/en/transaction?id=<transactionId>
-
-Attachments:
-  http://aws_url/download/your_mail_com/96/test_attachment.txt
-```
-
-In case of failure, you will get the message in reply:
-
-``` text
-We could not process your message, subject: EMAIL_SUBJECT, sent date: Wed Apr 21 13:18:33 GMT 2021, please contact administrators.
-```
-
-## Email message format
-
-``` text
-    PLAINTEXT_REPLY=true
-    API_TOKEN=your_api_token
-    METADATA=Your desired information to be stored in blockchain
-```
-
-**PLAINTEXT_REPLY=true** - PSG Mail Service will send the reply in plain text
-
-**PLAINTEXT_REPLY=false** - PSG Mail Service will send the reply encrypted by the recipient key
-
-## How to encrypt messages with the gpg tool
-
-``` bash
-gpg --encrypt --sign --armor -u your@mail.com -r recipient@mail.com your_file.txt
-```
-
-``` bash
-gpg --encrypt --sign --armor -u your@mail.com -r recipient@mail.com your_attachment.txt
-```
-
-### How to generate public/private key-pair
-
-``` bash
-gpg --gen-key
-```
-
-Recommended algorithm for keys is RSA 4096-bit.
-
-Do not forget to specify **your email** during key generation.
-
-### How to add recipient public key to the local keychain
-
-``` bash
-gpg --import recipient_public.key
-```
+Cardano mainnet:
+- **host:** TBD
+- **port:** 2000
