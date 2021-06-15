@@ -21,15 +21,15 @@ To save transaction (with message and attachment), you will need:
 
 * Mailvelope with configured [Gmail API](https://www.mailvelope.com/en/faq#gmail_permissions) integration
 
-* Purchased package at PSG Self Service UI
+* Purchased package at [PSG Self Service UI](https://prod.iog.services/)
 
-* API Token - generated at PSG Self Service UI
+* API Token - generated at [API Token](https://prod.iog.services/apitokens) page.
 
 ## Steps
 
-1. Create a new user (or use with existing one) and login to [Self Service](https://test.iog.services/)
+1. Create a new user (or use with existing one) and login to [Self Service](https://prod.iog.services/)
 
-2. Add email address and PGP public key at [PGP Public Key](https://test.iog.services/pgppublickey) page
+2. Add email address and PGP public key at [PGP Public Key](https://prod.iog.services/pgppublickey) page
 
 3. Go to mail.google.com and click the Mailvelope button - the browser should open a new Mailvelope window
 
