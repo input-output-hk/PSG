@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# NB!!! Remove the local protos folder first and commit the removal, make sure the local repo is 'clean'
+ 
 EXTERNAL_REPO="git@github.com:input-output-hk/psg-services.git"
 EXTERNAL_REPO_BRANCH="develop"
 UNIQUE_TAG="metadata-service"
