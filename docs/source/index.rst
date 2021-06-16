@@ -13,6 +13,9 @@ PSG Services Documentation
    PSG Services <guides/psg_services_grpc_guide.md>
    Metadata Service <guides/metadata_service_guide.md>
    StoreAndHash Service <guides/store_and_hash_service_guide.md>
+   Metadata Service (server) <guides/metadata_service_server_guide.md>
+   StoreAndHash Service (server) <guides/store_and_hash_service_server_guide.md>
+
    Mail Service (command-line) <guides/mail_service_guide_gpg.md>
    Mail Service (Mailvelope) <guides/mail_service_guide_ui.md>
    Transaction metadata verification <guides/mail_service_metadata_check.md>
