@@ -10,7 +10,7 @@ Working knowledge of gRPC is assumed.
 The service wraps access to the AWS instance for storing files.
 It is possible to specify connection details as well as the custom path to upload the file.
 
-### The StoreAndHash Service 
+### The StoreAndHash Service (server)
 
 ### Monitoring
 
