@@ -4,129 +4,77 @@ The metadata service wraps the work of posting metadata to the Cardano blockchai
 
 This allows for the automatic generation of clients using the specified IDL.
 
-This document describes the service and how to use it. Working knowledge of gRpc is assumed.
+This document describes using the service as an API. Working knowledge of gRpc is assumed.
 
-
-## The Service
-
-The service wraps access to the Cardano wallet backend API. It supports multiple wallets via its configuration file.
-It allows a single service instance to be used by
-various clients as a multi-tenant service.
-However, it also works as a microservice integrated with a particular solution.
-
-### Configuration
-
-The configuration is stored within the docker container in the `conf` folder of the application.
-It is possible to override configuration from the command line.
-
-This is the time interval used by the service to poll the wallet backend for updates on the state of a transaction.
-`txPollInterval = 4 seconds`
-
-This is the number of retries that will happen if communication with the wallet backend is lost.
-
-`max-retry-on-error = 3`
-
-If no `clientId` is provided to the service request, the default wallet name is used to service the request.
-
-`default-wallet-name = "metadata-default-wallet"`
-
-In the case where the balance of a wallet falls below this value, the low balance alarm is triggered.
-
-`default-minbalance = 1000000`
-
-As mentioned previously, the configuration supports multiple wallet configurations as a list.
-
-```
-wallets = [
-    {
-        url = "https://xxxxxx.iog.solutions:8090/v2/"
-        name = "metadata-default-wallet"
-        id = "695f31xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-        passphrase = "xxxxxxxxxx"
-        minbalance = 1000000
-        transferamount = 1000000
-        mnemonic = "valid menmonic words all the way to twenty"
-        monitor-low-balance = true
-    },...
-```
-
-Most of this wallet configuration is self-explanatory; note that it is NOT necessary to provide the mnemonic for the
-wallet in this file. This facilitates never having to have the mnemonic on this machine.
-
-To have the low balance alarm monitor ignore the balance of this wallet set.
-
-`monitor-low-balance = false`
-
-### Deployment
-
-The service is deployed as a docker container or as a Java Application as defined by the sbt native packager.
-
-To override any of the values in the application configuration (with environment substitution) from the command line use
-
-`-DVAR_NAME=NEW_VALUE`
-
-...so for example (Note the environment substitution syntax)
-
-```
-default-wallet-name = "metadata-default-wallet"
-default-wallet-name = ${?DEFAULT_WALLET_NAME}
-```
-
-... to override the default wallet name use
-
-`-DDEFAULT_WALLET_NAME=my-new-wallet`
-
-To override other application configuration from the command line e.g. from the docker run command line, use.
-
-`-J-DNAME=VALUE`
-
-### Monitoring
-
-There are two http urls available for monitoring applications, the first is a trivial `alive` url that returns 200 if the service is up.
-
-`wget https://myservice.com:2000/alive` should return 200 OK.
-
-More usefully
-
-`wget https://myservice.com:2000/alarms/lowbalance` will return a json response indicating whether all the monitored
-wallets have balances above their low balance thresholds.
-
-In the case where all wallets are ok the following is returned
-
-`{"allOk":true,"lowBalancedWallets":[],"errors":[]}`
-
-...otherwise, `allOk:false` will be returned along with details of the problems.
 
 ### The Metadata Service API
 
+This is a partial listing of the MetadataService (v0.2)
+```
+service MetadataService {
+   rpc SubmitMetadata(SubmitMetadataRequest) returns (stream SubmitMetadataResponse);
+   rpc ListMetadata(ListMetadataRequest) returns (stream ListMetadataResponse);
+}
+
+message SubmitMetadataRequest {
+  oneof options {
+    string metadata = 1;
+    string tx_id = 2; //For restarts, will start polling
+  }
+  int32 until_depth = 3;
+  iog.psg.service.common.CredentialsMessage credentials = 4;
+}
+
+message SubmitMetadataResponse {
+  oneof result {
+    string problem = 1;
+    TxStatus tx_status = 2;
+  }
+}
+```
+
+There are two functions, one for submitting metadata or checking on an already submitted metadata transaction and a second listing function.
+
+Both methods provide a *stream* of responses.
+
 #### Submit Metadata
 
-The submit metadata method provides a stream of response updates until all the criteria have been met.
+To submit metadata the caller provides 
 
-Create a request and provide the `clientId` to choose a particular wallet configuration, or provide no client id to use the default wallet.
+  - the depth 
+    
+This is the number of blocks the caller wants the metadata transaction buried under. 
+If the caller specifies a depth of 1 block there is always the chance the blockchain will reorganise itself and remove the transaction, 
+a depth of 100 means that possibility is vanishingly small, but the call will take longer. 
 
-Provide the depth as a number of blocks.
+  - the credentials
+
+These are the credentials generated by the PSG Services web application after the user has created a "log in" and paid for use of the services.
+
+Note - valid credentials are not necessary when using the testnet 
+  - the metadata 
 
 Provide the metadata as a string in JSON format, but conforming to the schema described
 [here](https://input-output-hk.github.io/cardano-wallet/api/edge/#operation/postTransactionFee)
 
+  - OR the transaction id
+
+The first result in the stream of results returned by the call will contain the transaction id (`tx_id`). In the case where the call is 
+interrupted  it can be restarted by calling "SubmitMetadata" again but providing the transaction id instead of the metadata. 
+
 The result will be a stream of responses; these responses are checked for status, first to make sure the request has a state 'IN_LEDGER'
-and finally, to indicate the transaction has been buried under the requisite number of blocks.
+and finally, to indicate the transaction has been 'buried' under the requisite number of blocks.
 
-The transaction id (`tx_id`) for the metadata transaction is returned in the first result of the stream.
+In the case of a problem, that problem is described in the `problem` field of the response.`
 
-The stream ends when these criteria are filled or there is a 'problem'.
-
-In the case of a problem, that problem is described in a `problem` field of the response.`
-
-In the case where a problem occurs before the criteria are filled, due to a lost connection, for example,
-the process can be restarted by
-resending the request but providing only the `tx_id` and the `clientId`.
 
 #### List Metadata
 
-List all metadata transactions associated with the clientIds wallet between the dates given.
+List all metadata transactions associated with the `clientId` between the dates given.
 
 Note the dates are optional and when not provided, all metadata transactions are returned.
 
 Note, if a transaction has no metadata, it will not be listed by this call.
+
+Note, on the very rare occasions where the internal service configuration drastically changes transactions associated with a clientId may not be returned. 
+Client applications that have a critical long term dependency on remembering the ids of the transactions they posted are advised to make an independent record of the transaction id.   
