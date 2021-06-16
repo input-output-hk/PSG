@@ -1,4 +1,4 @@
-# The Metadata Service
+# The Metadata Service (server)
 
 The metadata service wraps the work of posting metadata to the Cardano blockchain in a gRpc defined service.
 

@@ -19,18 +19,18 @@
    ![AddressAdded](./pictures/address-added.png)
    
    
-7. Purchase PSG Services package from the [available options](#psg-services-package-options).
+7. Purchase PSG Services [package](#psg-services-package-description).
    
    You can navigate to the View Package page from the menu bar on the left side to check the package status.  
    ![PackagePurchased](./pictures/package-purchased.png)
    
 
-8. Generate a new token at the API Token page. Do not forget to save the token value, as it will not be displayed on the page after the page refreshes.  
+8. Generate a new token at the [API Token](https://prod.iog.services/apitokens) page. Do not forget to save the token value, as it will not be displayed on the page after the page refreshes.  
    You can always replace an existing token with a new one by selecting the "I want to replace existing API Token" option.
    ![GeneratedToken](./pictures/generated-token.png)  
    
 
-9. Set your email and PGP public key at the PGP Public Key page.
+9. Set your email and PGP public key at the [PGP Public Key](https://prod.iog.services/pgppublickey) page.
    ![KeySet](./pictures/key-set.png)
 
 10. **Now, you are ready to use PSG Services!**
