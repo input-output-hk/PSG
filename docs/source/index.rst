@@ -30,16 +30,16 @@ PSG Services Documentation
         </a>
    </p>
 
-`PSG Self Serve Introduction <guides/intro.md>`_
-#######################################################
+`PSG Self Serve Introduction <https://psg-services.readthedocs.io/en/latest/guides/intro.html>`_
+################################################################################################
 
 
 `PSG Mainnet Self Serve User Interface <https://psg.iog.services/>`_
-#######################################################
+####################################################################
 
 
 `PSG Testnet Self Serve User Interface <https://psg-testnet.iog.services/>`_
-#######################################################
+############################################################################
 
 
 PSG services core functionality
