@@ -16,9 +16,9 @@ To perform metadata verification for the transaction, you will need:
 
 ## How to verify transaction metadata
 
-1. Log in to [PSG Self Service UI](https://prod.iog.services/)
+1. Log in to [PSG Self Service UI](https://psg.iog.services/)
 
-2. Navigate to the [Auth Email Metadata](https://prod.iog.services/authemailmetadata) page
+2. Navigate to the [Auth Email Metadata](https://psg.iog.services/authemailmetadata) page
 
 3. Find processed transaction hash, enter it into the input field and click "Get Metadata" button
 

@@ -9,6 +9,7 @@ PSG Services Documentation
    :hidden:
 
 
+   Introduction <guides/intro.md>
    New User guide <guides/new_user_guide.md>
    PSG Services <guides/psg_services_grpc_guide.md>
    Metadata Service <guides/metadata_service_guide.md>
@@ -24,19 +25,24 @@ PSG Services Documentation
 .. raw:: html
 
    <p align="center">
-        <a href='https://psg-services-draft.readthedocs.io/en/latest/?badge=latest'>
-            <img src='https://readthedocs.org/projects/psg-services-draft/badge/?version=latest' alt='Documentation Status' />
+        <a href='https://psg-services.readthedocs.io/en/latest/?badge=latest'>
+            <img src='https://readthedocs.org/projects/psg-services/badge/?version=latest' alt='Documentation Status' />
         </a>
    </p>
 
-Link: `PSG Self Serve UI <https://prod.iog.services/>`_
+`PSG Self Serve Introduction <guides/intro.md>`_
 #######################################################
 
-**Please note, that for now PSG Services use** `Cardano testnet <https://developers.cardano.org/en/testnets/cardano/overview/>`_
 
-If you want to use only gRPC services - skip account creation described in New User Guide.
+`PSG Mainnet Self Serve User Interface <https://psg.iog.services/>`_
+#######################################################
 
-PSG services core functionality:
+
+`PSG Testnet Self Serve User Interface <https://psg-testnet.iog.services/>`_
+#######################################################
+
+
+PSG services core functionality
 ################################
 
 * Submit metadata to the blockchain using Metadata service gRPC API

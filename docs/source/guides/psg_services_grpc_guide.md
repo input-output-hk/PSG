@@ -9,7 +9,7 @@ For test and development purposes we provide a testnet facing version of the ser
 ### **Steps:**
 1. Get proto files from [PSG repository](https://github.com/input-output-hk/PSG/tree/develop/protos)
 2. Generate gRPC clients with your preferred [client generator](https://grpc.io/docs/languages/), e.g. [akka-grpc](https://doc.akka.io/docs/akka-grpc/current/index.html) or [scalapb](https://github.com/scalapb/ScalaPB)
-3. Implement clients for one or more services: [Metadata service](https://psg-services-draft.readthedocs.io/en/latest/guides/metadata_service_guide.html) and/or [StoreAndHash](https://psg-services-draft.readthedocs.io/en/latest/guides/store_and_hash_service_guide.html) service
+3. Implement clients for one or more services: [Metadata service](https://psg-services.readthedocs.io/en/latest/guides/metadata_service_guide.html) and/or [StoreAndHash](https://psg-services.readthedocs.io/en/latest/guides/store_and_hash_service_guide.html) service
 
 
 ### Cardano Testnet  
@@ -20,7 +20,9 @@ For test and development purposes we provide a testnet facing version of the ser
 - **port:** 2001
 - **TLS** true
 
-You **can specify any client_id or api_token** in gRPC requests. (request validation disabled)
+- **client_id:** your username from [PSG Self Serve UI](https://psg-testnet.iog.services)
+- **api_token:** token, generated at [API Token](https://psg-testnet.iog.services/apitokens) page
+
 
 ### Cardano Mainnet
 
@@ -29,6 +31,6 @@ You **can specify any client_id or api_token** in gRPC requests. (request valida
 - **port:** 2001
 - **TLS** true
 
-- **client_id:** your username from [PSG Self Serve UI](https://prod.iog.services)
-- **api_token:** token, generated at [API Token](https://prod.iog.services/apitokens) page
+- **client_id:** your username from [PSG Self Serve UI](https://psg.iog.services)
+- **api_token:** token, generated at [API Token](https://psg.iog.services/apitokens) page
 
