@@ -112,7 +112,7 @@ html_css_files = [
     'css/custom.css',
 ]
 
-html_logo = "../.sphinx/iohk_logo_trans.png"
+html_logo = "../.sphinx/iohk_full_trans.png"
 
 html_context = {
   "display_github": True, # Add 'Edit on Github' link instead of 'View page source'
