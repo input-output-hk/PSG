@@ -16,6 +16,8 @@ To save transaction (with message and attachment), you will need:
 
 * API Token - generated at PSG Self Service UI
 
+* Recipient public key [is downloaded](#how-to-get-recipient-public-key)
+
 * Recipient's public key [is added to local keychain](#how-to-add-recipient-public-key-to-the-local-keychain)
 
 ## Steps
@@ -88,3 +90,15 @@ Do not forget to specify **your email** during key generation.
 ``` bash
 gpg --import recipient_public.key
 ```
+
+### How to get recipient public key
+Recipient addresses:
+
+* psg.authemail@gmail.com (for [PSG Testnet Self Serve UI](https://psg-testnet.iog.services/))
+* robot@iog.services (for [PSG Mainnet Self Serve UI](https://psg.iog.services/)) 
+
+Find public key by email using one of the following PGP Key Servers:
+
+* [keys.openpgp.org](https://keys.openpgp.org/)
+* [Mailvelope Key Server](https://keys.mailvelope.com/)  
+

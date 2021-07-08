@@ -17,6 +17,8 @@ To save transaction (with message and attachment), you will need:
 
 * Public / private key pair, [generated in Mailvelope](https://www.mailvelope.com/en/help#configuration)
 
+* Recipient public key [is downloaded](#how-to-get-recipient-public-key)
+
 * Recipient's public key [imported to Mailvelope](https://www.mailvelope.com/en/faq#import_keys)
 
 * Mailvelope with configured [Gmail API](https://www.mailvelope.com/en/faq#gmail_permissions) integration
@@ -85,3 +87,14 @@ We could not process your message, subject: EMAIL_SUBJECT, sent date: Wed Apr 21
 **PLAINTEXT_REPLY=true** - PSG Mail Service will send the reply in plain text
 
 **PLAINTEXT_REPLY=false** - PSG Mail Service will send the reply encrypted by the recipient key
+
+### How to get recipient public key
+Recipient addresses:
+
+* psg.authemail@gmail.com (for [PSG Testnet Self Serve UI](https://psg-testnet.iog.services/))
+* robot@iog.services (for [PSG Mainnet Self Serve UI](https://psg.iog.services/))
+
+Find public key by email using one of the following PGP Key Servers:
+
+* [keys.openpgp.org](https://keys.openpgp.org/)
+* [Mailvelope Key Server](https://keys.mailvelope.com/)  
