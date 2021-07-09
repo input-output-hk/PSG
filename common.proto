@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package iog.psg.service.common;
+
+option java_multiple_files = true;
+
+message CredentialsMessage {
+    string client_id = 1;
+    string api_token = 2;
+}
