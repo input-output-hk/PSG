@@ -32,7 +32,7 @@ To save transaction (with message and attachment), you will need:
 
 5. [Encrypt attachment](#how-to-encrypt-messages-with-gpg-tool) with recipient's public key
 
-6. Sent email to recipient@mail.com
+6. Sent email to [recipient](#how-to-get-recipient-public-key)
 
 7. Wait for reply message (with link to the file on AWS S3 and link to the transaction in Cardano Explorer)
 
@@ -92,7 +92,7 @@ gpg --import recipient_public.key
 ```
 
 ### How to get recipient public key
-Recipient addresses:
+**Recipient addresses:**
 
 * psg.authemail@gmail.com (for [PSG Testnet Self Serve UI](https://psg-testnet.iog.services/))
 * robot@iog.services (for [PSG Mainnet Self Serve UI](https://psg.iog.services/)) 

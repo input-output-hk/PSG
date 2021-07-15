@@ -35,7 +35,7 @@ To save transaction (with message and attachment), you will need:
 
 3. Go to mail.google.com and click the Mailvelope button - the browser should open a new Mailvelope window
 
-4. Add the recipient - **recipient.authemail.roman@gmail.com** and fill the email subject
+4. Add the recipient - **[recipient](#how-to-get-recipient-public-key)** and fill the email subject
 
    ![Recipient](./pictures/recipient_subject.png)
 
@@ -89,7 +89,7 @@ We could not process your message, subject: EMAIL_SUBJECT, sent date: Wed Apr 21
 **PLAINTEXT_REPLY=false** - PSG Mail Service will send the reply encrypted by the recipient key
 
 ### How to get recipient public key
-Recipient addresses:
+**Recipient addresses:**
 
 * psg.authemail@gmail.com (for [PSG Testnet Self Serve UI](https://psg-testnet.iog.services/))
 * robot@iog.services (for [PSG Mainnet Self Serve UI](https://psg.iog.services/))
