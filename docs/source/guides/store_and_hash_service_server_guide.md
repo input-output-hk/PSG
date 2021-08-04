@@ -16,11 +16,11 @@ It is possible to specify connection details as well as the custom path to uploa
 
 There are two http urls available for monitoring applications, the first is a trivial `alive` url that returns 200 if the service is up.
 
-`wget https://myservice.com:2000/alive` should return 200 OK.
+`wget https://myservice.com:2001/alive` should return 200 OK.
 
 More usefully
 
-`wget https://myservice.com:2000/alarms/lowbalance` will return a json response indicating whether all the monitored
+`wget https://myservice.com:2001/alarms/lowbalance` will return a json response indicating whether all the monitored
 wallets have balances above their low balance thresholds.
 
 In the case where all wallets are ok the following is returned
