@@ -16,7 +16,7 @@ For test and development purposes we provide a testnet facing version of the ser
 
 #### **Connection Details:**
 
-- **host:** psg-aggregate-services-testnet.iog.solutions
+- **host:** psg-testnet.iog.services
 - **port:** 2001
 - **TLS** true
 
@@ -27,7 +27,7 @@ For test and development purposes we provide a testnet facing version of the ser
 ### Cardano Mainnet
 
 #### **Connection Details:**
-- **host:** psg-aggregate-services.iog.solutions
+- **host:** psg.iog.services
 - **port:** 2001
 - **TLS** true
 
