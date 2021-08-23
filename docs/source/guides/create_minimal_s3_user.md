@@ -6,7 +6,8 @@ Follow the step to create a new user from [Creating an IAM user](https://docs.aw
 
 - Make sure you allow only programmatic access of the user
 - Make sure you downloaded the Access key and Secret Access Key
-
+- **Optional.** If you want to restrict access to the files stored on S3 bucket, you need to [create IAM user group](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_create.html) 
+  with **AmazonS3FullAccess** permission and assign it to the newly created user
 
 #### 2. Create S3 bucket
 

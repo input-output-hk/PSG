@@ -20,6 +20,8 @@ To save transaction (with message and attachment), you will need:
 
 * Recipient's public key [is added to local keychain](#how-to-add-recipient-public-key-to-the-local-keychain)
 
+* AWS IAM user and S3 bucket [are configured](create_minimal_s3_user.md)
+
 ## Steps
 
 1. Create a new user or login with an existing one to Self Service UI
@@ -53,17 +55,37 @@ In case of failure, you will get the message in reply:
 We could not process your message, subject: EMAIL_SUBJECT, sent date: Wed Apr 21 13:18:33 GMT 2021, please contact administrators.
 ```
 
+11. [Download file](#how-to-download-file-from-s3-bucket) from AWS S3 bucket if needed
+
 ## Email message format
 
 ``` text
-    PLAINTEXT_REPLY=true
-    API_TOKEN=your_api_token
-    METADATA=Your desired information to be stored in blockchain
+API_TOKEN=your_api_token
+METADATA=Some Test Metadata for Encrypted Message
+S3_BUCKET=your_bucket_name
+S3_REGION=your_bucket_region
+S3_KEY=aws_user_access_key
+S3_SECRET=aws_user_secret_key
+PLAINTEXT_REPLY=true
+BASE_URL=optional_custom_download_url
 ```
 
-**PLAINTEXT_REPLY=true** - PSG Mail Service will send the reply in plain text
+**API_TOKEN** - User token, generated at [PSG Self Serve UI](https://psg.iog.services/)  
 
-**PLAINTEXT_REPLY=false** - PSG Mail Service will send the reply encrypted by the recipient key
+**METADATA** - User message to be included in the transaction metadata (Optional)
+
+**S3_BUCKET** - AWS S3 bucket name  
+
+**S3_REGION** - AWS S3 region name for bucket
+
+**S3_KEY** - AWS IAM user access key  
+
+**S3_SECRET** - AWS IAM user secret key  
+
+**BASE_URL** - Custom URL prefix for files saved on AWS S3 (Optional)
+
+**PLAINTEXT_REPLY** - If set to true - response email will not be encrypted by the recipient key.
+Configured to **false** by default or if parameter is not specified. (Optional)
 
 ## How to encrypt messages with the gpg tool
 
@@ -101,4 +123,13 @@ Find public key by email using one of the following PGP Key Servers:
 
 * [keys.openpgp.org](https://keys.openpgp.org/)
 * [Mailvelope Key Server](https://keys.mailvelope.com/)  
+
+### How to download file from S3 bucket
+
+- If you configured [public access for all](create_minimal_s3_user.md#L84) - you can download the file by executing GET request URL from Mail Service response
+  (e.g.from browser)
+- If you set restricted access, you need to include a custom headers to download request:
+```
+curl -i -H "aws_key: your_key" -H "aws_secret: your_secret" -H "aws_region: bucket_region"  https://psg.iog.services:2001/download/bucketname/path-to-file
+```
 
