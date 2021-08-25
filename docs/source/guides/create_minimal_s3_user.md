@@ -95,6 +95,5 @@ Replace
 You can change the Principal to allow a specific AWS account or service.
 
 - Any other permission other than writing/updating(`"s3:PutObject"`) and deleting (`"s3:DeleteObject"`) actions can be attached to any AWS user or AWS role using identity-based policy.  
-  
 
 - Attaching writing/updating/deleting policies will not take effect as it is explicitly denied on the bucket policy

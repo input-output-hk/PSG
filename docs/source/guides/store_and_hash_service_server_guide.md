@@ -2,7 +2,7 @@
 
 The StoreAndHash service provides an API for posting data to the AWS storage, getting the hash of the data and URL for further download.
 
-This document describes the service frm a deployment point of view. 
+This document describes the service from a deployment point of view. 
 
 Working knowledge of gRPC is assumed.
 
