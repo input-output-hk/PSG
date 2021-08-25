@@ -70,7 +70,7 @@ PLAINTEXT_REPLY=true
 BASE_URL=optional_custom_download_url
 ```
 
-**API_TOKEN** - User token, generated at [PSG Self Serve UI](https://psg.iog.services/)  
+**API_TOKEN** - User token, generated at [PSG Self Serve UI](https://psg.iog.services/apitokens)  
 
 **METADATA** - User message to be included in the transaction metadata (Optional)
 
@@ -126,7 +126,7 @@ Find public key by email using one of the following PGP Key Servers:
 
 ### How to download file from S3 bucket
 
-- If you configured [public access for all](create_minimal_s3_user.md#L84) - you can download the file by executing GET request URL from Mail Service response
+- If you configured [public access for all](create_minimal_s3_user.md) - you can download the file by executing GET request URL from Mail Service response
   (e.g.from browser)
 - If you set restricted access, you need to include a custom headers to download request:
 ```
