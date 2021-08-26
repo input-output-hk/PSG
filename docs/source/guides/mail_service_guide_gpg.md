@@ -116,7 +116,7 @@ gpg --import recipient_public.key
 ### How to get recipient public key
 **Recipient addresses:**
 
-* psg.authemail@gmail.com (for [PSG Testnet Self Serve UI](https://psg-testnet.iog.services/))
+* robot-testnet@iog.services (for [PSG Testnet Self Serve UI](https://psg-testnet.iog.services/))
 * robot@iog.services (for [PSG Mainnet Self Serve UI](https://psg.iog.services/)) 
 
 Find public key by email using one of the following PGP Key Servers:
