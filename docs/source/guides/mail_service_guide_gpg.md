@@ -76,7 +76,7 @@ BASE_URL=optional_custom_download_url
 
 Newline characters are not supported. 
 
-Use **multiple** METADATA fields in one message for storing multiple paragraphs.
+Use multiple METADATA fields in one message to conveniently add multiple lines of metadata
 
 **S3_BUCKET** - AWS S3 bucket name  
 
