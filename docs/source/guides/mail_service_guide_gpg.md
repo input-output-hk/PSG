@@ -72,7 +72,11 @@ BASE_URL=optional_custom_download_url
 
 **API_TOKEN** - User token, generated at [PSG Self Serve UI](https://psg.iog.services/apitokens)  
 
-**METADATA** - User message to be included in the transaction metadata (Optional)
+**METADATA** - User message to be included in the transaction metadata (Optional).  
+
+Newline characters are not supported. 
+
+Use **multiple** METADATA fields in one message for storing multiple paragraphs.
 
 **S3_BUCKET** - AWS S3 bucket name  
 
