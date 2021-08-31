@@ -12,6 +12,8 @@ enum TxState {
   TX_STATE_UNSPECIFIED = 0;
   TX_STATE_PENDING = 1;
   TX_STATE_IN_LEDGER = 2;
+  TX_STATE_EXPIRED = 3;
+  TX_STATE_SUBMITTED = 4;
 }
 
 message TxStatus {

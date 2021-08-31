@@ -32,16 +32,14 @@ message Chunk {
 
 message UploadDetails {
     string path = 1;
-    oneof credentials {
-        string clientId = 2;
-        AwsCredentials aws = 3;
-    }
+    AwsCredentials aws = 2;
 }
 
 message AwsCredentials {
    string keyId = 1;
    string keySecret = 2;
    string bucket = 3;
+   string region = 4;
 }
 
 message StoreAndHashRequest {
