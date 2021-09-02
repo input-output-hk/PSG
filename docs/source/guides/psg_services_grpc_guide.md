@@ -11,6 +11,9 @@ For test and development purposes, we provide a testnet facing version of the se
 2. Generate gRPC clients with your preferred [client generator](https://grpc.io/docs/languages/), e.g. [akka-grpc](https://doc.akka.io/docs/akka-grpc/current/index.html) or [scalapb](https://github.com/scalapb/ScalaPB)
 3. Implement clients for one or more services: [Metadata service](https://psg-services.readthedocs.io/en/latest/guides/metadata_service_guide.html) and/or [StoreAndHash](https://psg-services.readthedocs.io/en/latest/guides/store_and_hash_service_guide.html) service
 
+### Connection Details
+
+**Note:** Make sure that you use **secure connection (TLS = true)** for any request to PSG Services gRPC API.
 
 ### Cardano Testnet
 
@@ -19,7 +22,6 @@ For test and development purposes, we provide a testnet facing version of the se
 - **host:** psg-testnet.iog.services
 - **port:** 2001
 - **TLS** true
-
 - **client_id:** your username from [PSG Self Serve UI](https://psg-testnet.iog.services)
 - **api_token:** token, generated at [API Token](https://psg-testnet.iog.services/apitokens) page
 
@@ -30,6 +32,5 @@ For test and development purposes, we provide a testnet facing version of the se
 - **host:** psg.iog.services
 - **port:** 2001
 - **TLS** true
-
 - **client_id:** your username from [PSG Self Serve UI](https://psg.iog.services)
 - **api_token:** token, generated at [API Token](https://psg.iog.services/apitokens) page

@@ -24,6 +24,7 @@ The testnet and production platforms are identical except that the testnet platf
 
 The connection details are [here](https://psg-services.readthedocs.io/en/latest/guides/psg_services_grpc_guide.html)
 
+**Note**: Please report any issues to **[psg-tech@iohk.io](mailto:psg-tech@iohk.io)**
 
 ### Thank you
 
