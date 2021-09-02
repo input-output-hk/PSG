@@ -9,7 +9,7 @@ const storeAndHashSvc = new StoreAndHashService.StoreAndHashServiceClient(
     grpc.credentials.createSsl()
 );
 
-// Do not forget to set access and secret keys, bucket and region from your AWS S3 account
+// Replace AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_S3_BUCKET and BUCKET_REGION with your S3 account values and replace demo-file-path with your desired path.
 const reqs = [
     new StoreAndHashMessages.StoreAndHashRequest()
         .setDetails(

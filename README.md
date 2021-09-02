@@ -18,3 +18,7 @@ Professional Services Group Repository:
 | cardano-metadata-service                                                            | 0.2.41           |
 | psg-self-service-node                                                               | 0.5.48           |
 | psg-self-service-ui                                                                 | 0.5.48           |
+
+### PSG Services: gRPC API Examples
+
+* Examples in Javascript can be found [here](https://github.com/input-output-hk/PSG/tree/master/examples/js)

@@ -38,7 +38,7 @@ node src/submit_metadata_client.js
 ## How to execute example for StoreAndHash service
 
 1. Make sure, that you have registered an account in [PSG Self Serve UI](https://psg.iog.services/), purchased a package and generated API Token.
-2. Update access key, secret key, bucket and region from your AWS S3 bucket in src/store_and_hash_client.js:
+2. Replace AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_S3_BUCKET and BUCKET_REGION with your S3 account values and replace demo-file-path with your desired path in src/store_and_hash_client.js:
 ```shell
 const reqs = [
     new StoreAndHashMessages.StoreAndHashRequest()
@@ -50,6 +50,8 @@ const reqs = [
                     .setBucket("AWS_S3_BUCKET")
                     .setRegion("BUCKET_REGION")
                 )
+                .setPath("demo-file-path")
+        ),
 ```
 
 3. Execute in Terminal:
