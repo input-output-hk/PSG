@@ -1,0 +1,52 @@
+//#service-request-reply
+syntax = "proto3";
+
+package iog.psg.service.storeandhash;
+
+option java_multiple_files = true;
+option java_package = "iog.psg.service.storeandhash";
+option java_outer_classname = "StoreAndHashService";
+
+
+service StoreAndHashService {
+
+    rpc StoreAndHashHttp (stream StoreAndHashRequest) returns (stream StoreAndHashResponse);
+    rpc StoreAndHashIpfs (stream StoreAndHashRequest) returns (stream StoreAndHashResponse);
+}
+
+message StoreAndHashResponse {
+    oneof options {
+        Hash hash = 1;
+        string url = 2;
+        string problem = 3;
+    }
+}
+
+message Hash {
+   string hashType = 1;
+   bytes hashBytes = 2;
+   string hashBase64 = 3;
+}
+
+message Chunk {
+    bytes part = 1;
+}
+
+message UploadDetails {
+    string path = 1;
+    AwsCredentials aws = 2;
+}
+
+message AwsCredentials {
+   string keyId = 1;
+   string keySecret = 2;
+   string bucket = 3;
+   string region = 4;
+}
+
+message StoreAndHashRequest {
+    oneof options {
+        Chunk chunk = 1;
+        UploadDetails details = 2;
+    }
+}
