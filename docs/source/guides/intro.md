@@ -17,7 +17,7 @@ related to the Cardano blockchain, and a user interface to help users pay for an
 
 
 Further details on registering and paying in Ada for the services is available on this site, and you can view walkthrough
-videos on our [youtube channel](https://www.youtube.com/c/IohkIo/playlists)
+videos on our [youtube channel](https://youtube.com/playlist?list=PLnPTB0CuBOByp2KWl22ElFZsb63s72O1v)
 
 Finally, there is a duplicate testnet facing PSG Services platform for evaluation and development purposes.
 The testnet and production platforms are identical except that the testnet platform uses testnet nodes.

@@ -1,6 +1,8 @@
 //#service-request-reply
 syntax = "proto3";
 
+package iog.psg.service.storeandhash;
+
 option java_multiple_files = true;
 option java_package = "iog.psg.service.storeandhash";
 option java_outer_classname = "StoreAndHashService";
