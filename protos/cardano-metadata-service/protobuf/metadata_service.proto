@@ -11,6 +11,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 import "tx_status.proto";
 import "common.proto";
+import "errors.proto";
 
 service MetadataService {
   rpc SubmitMetadata(SubmitMetadataRequest) returns (stream SubmitMetadataResponse);
@@ -28,7 +29,7 @@ message SubmitMetadataRequest {
 
 message SubmitMetadataResponse {
   oneof result {
-    string problem = 1;
+    AppError problem = 1;
     TxStatus tx_status = 2;
   }
 }
@@ -41,7 +42,7 @@ message ListMetadataRequest {
 
 message ListMetadataResponse {
   oneof result {
-    google.protobuf.StringValue problem = 1;
+    AppError problem = 1;
     TxStatus tx_status = 2;
   }
 }
