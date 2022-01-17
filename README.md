@@ -11,13 +11,13 @@ Professional Services Group Repository:
 | Component                                                                           | Version          | 
 | ------------------------------------------------------------------------------------|:----------------:|
 | [psg-cardano-wallet-api](https://github.com/input-output-hk/psg-cardano-wallet-api) | 0.2.4.1            |
-| [cardano-wallet](https://github.com/input-output-hk/cardano-wallet)                 | 2021-09-29 |
+| [cardano-wallet](https://github.com/input-output-hk/cardano-wallet)                 | 2021-11-11 |
 | [cardano-node](https://github.com/input-output-hk/cardano-node)                     | 1.30.1           |
-| store-and-hash-service                                                              | 0.2.44           |
-| auth-emails-service                                                                 | 0.2.44          |
-| cardano-metadata-service                                                            | 0.2.44           |
-| psg-self-service-node                                                               | 0.5.50           |
-| psg-self-service-ui                                                                 | 0.5.50           |
+| store-and-hash-service                                                              | 0.2.58           |
+| auth-emails-service                                                                 | 0.2.58          |
+| cardano-metadata-service                                                            | 0.2.58           |
+| psg-self-service-node                                                               | 0.5.82           |
+| psg-self-service-ui                                                                 | 0.5.85           |
 
 ### PSG Services: gRPC API Examples
 

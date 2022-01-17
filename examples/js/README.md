@@ -33,7 +33,7 @@ const credentials = new CommonMessages.CredentialsMessage()
 ```
 3. Execute in Terminal:
 ```shell
-node src/submit_metadata_client.js
+node src/metadata_service_client.js
 ```
 ## How to execute example for StoreAndHash service
 
