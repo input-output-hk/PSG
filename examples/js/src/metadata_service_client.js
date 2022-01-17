@@ -8,9 +8,10 @@ const metadataSvc = new MetadataService.MetadataServiceClient(
     'psg-testnet.iog.services:2001',
     grpc.credentials.createSsl());
 
+// Replace CLIENT_ID and API_TOKEN with your PSG Self Serve UI account values
 const credentials = new CommonMessages.CredentialsMessage()
-    .setClientId("your_psg_username")
-    .setApiToken("your_api_token");
+    .setClientId("CLIENT_ID")
+    .setApiToken("API_TOKEN");
 
 // List Metadata Request
 loggingStreamHandler(

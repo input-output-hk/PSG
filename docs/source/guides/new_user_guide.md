@@ -56,4 +56,4 @@ If you have 3 credits that expire on May 1, after depositing 10 ADA, you will ha
 - SubmitMetadata: 10 credits
 - ListTransactions: 1 credit
 - AuthenticatedEmail: 15 credits
-- HashAndStore: free!
+- HashAndStore: 1 credit
