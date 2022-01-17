@@ -25,7 +25,7 @@ grpc_tools_node_protoc --proto_path=../../protos/cardano-metadata-service/protob
 ## How to execute example for Metadata service
 
 1. Make sure, that you have registered an account in [PSG Self Serve UI](https://psg.iog.services/), purchased a package and generated API Token.
-2. Set your username and API Token in the src/metadata_service_client.js file:
+2. Replace CLIENT_ID and API_TOKEN with your PSG Self Serve UI account values in src/metadata_service_client.js
 ```shell
 const credentials = new CommonMessages.CredentialsMessage()
     .setClientId("CLIENT_ID")

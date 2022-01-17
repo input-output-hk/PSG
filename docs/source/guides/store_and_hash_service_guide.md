@@ -1,6 +1,6 @@
 # The StoreAndHash Service
 
-The StoreAndHash service provides an API for posting data to [AWS S3](https://aws.amazon.com/s3/) or [IPFS](https://ipfs.io/) storages, getting the HASH of the data and URL for further download.
+The StoreAndHash service provides an API for posting data to [AWS S3](https://aws.amazon.com/s3/) or [IPFS](https://ipfs.io/) storages, getting the hash of the data and URL for further download.
 
 This document describes the service API and how to use it.
 
