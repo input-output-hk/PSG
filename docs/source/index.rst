@@ -46,7 +46,7 @@ PSG services core functionality
 ################################
 
 * Submit metadata to the blockchain using Metadata service gRPC API
-* Store file in AWS and get URL to file and file's hash via StoreAndHash service gRPC API
+* Store file in AWS S3 or IPFS and get URL to file and file's hash via StoreAndHash service gRPC API
 * Submit metadata and attachments to the blockchain using mail clients from UI
 * Submit metadata and attachments to the blockchain using the gpg command-line tool
 * Verify transaction metadata info via PSG Self Serve

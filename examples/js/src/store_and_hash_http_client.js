@@ -9,27 +9,33 @@ const storeAndHashSvc = new StoreAndHashService.StoreAndHashServiceClient(
     grpc.credentials.createSsl()
 );
 
+// Replace CLIENT_ID and API_TOKEN with your PSG Self Serve UI account values
+const credentials = new CommonMessages.CredentialsMessage()
+    .setClientId("CLIENT_ID")
+    .setApiToken("API_TOKEN");
+
 // Replace AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_S3_BUCKET and BUCKET_REGION with your S3 account values and replace demo-file-path with your desired path.
-const reqs = [
+const storeAndHashHttpRequests = [
     new StoreAndHashMessages.StoreAndHashRequest()
         .setDetails(
             new StoreAndHashMessages.UploadDetails()
                 .setAws(new StoreAndHashMessages.AwsCredentials()
-                    .setKeyid("AWS_ACCCESS_KEY")
+                    .setKeyid("AWS_ACCESS_KEY")
                     .setKeysecret("AWS_SECRET_KEY")
                     .setBucket("AWS_S3_BUCKET")
                     .setRegion("BUCKET_REGION")
                 )
+                .setCredentials(credentials)
                 .setPath("demo-file-path")
         ),
 
     new StoreAndHashMessages
         .StoreAndHashRequest()
-        .setChunk(new StoreAndHashMessages.Chunk().setPart("Demo Data To Be Saved"))
+        .setChunk(new StoreAndHashMessages.Chunk().setPart("Demo Data To Be Saved At AWS S3"))
 ]
 
-const storeAndHashCall = storeAndHashSvc.storeAndHashHttp();
-loggingStreamHandler(storeAndHashCall);
-reqs.forEach(req => storeAndHashCall.write(req));
-storeAndHashCall.end();
+const storeAndHashHttpCall = storeAndHashSvc.storeAndHashHttp();
+loggingStreamHandler(storeAndHashHttpCall);
+storeAndHashHttpRequests.forEach(req => storeAndHashHttpCall.write(req));
+storeAndHashHttpCall.end();
 
