@@ -142,3 +142,9 @@ message AppError {
   string msg = 2;
 }
 ```
+
+There are two groups of errors, that can occur while using PSG services:
+- permanent (E.g. `failed to authorise call, valid API credentials should be provided`)
+- temporary (E.g. `The system is temporarily unavailable. Please try again later`)
+
+In case of temporary errors - you need just try to make a call to service later. 
