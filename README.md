@@ -22,3 +22,4 @@ Professional Services Group Repository:
 ### PSG Services: gRPC API Examples
 
 * Examples in Javascript can be found [here](https://github.com/input-output-hk/PSG/tree/master/examples/js)
+* Examples in Java can be found [here](https://github.com/input-output-hk/PSG/tree/master/examples/java)
