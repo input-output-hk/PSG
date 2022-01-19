@@ -24,8 +24,14 @@ public class DataService {
     private MetadataServiceGrpc.MetadataServiceBlockingStub metadataService;
 
     public List<TransactionStatus> getMetadata() {
+        long secondsNow = System.currentTimeMillis() / 1000;
+        Timestamp now = Timestamp.newBuilder().setSeconds(secondsNow).build();
+        Timestamp previousDay = Timestamp.newBuilder().setSeconds(secondsNow - (60 * 60 * 24)).build();
+
         ListMetadataRequest request = ListMetadataRequest.newBuilder()
                 .setCredentials(getCredentials())
+                .setStartAt(previousDay)
+                .setEndAt(now)
                 .build();
 
         List<TransactionStatus> transactions = new ArrayList<>();
