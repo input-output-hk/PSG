@@ -38,7 +38,8 @@ public class DataService {
                             .id(response.getTxStatus().getTxId())
                             .state(response.getTxStatus().getTxState().toString())
                             .metadata(response.getTxStatus().getMetadata().toString())
-                            .problem(response.getProblem().toString())
+                            .errorCode(response.getProblem().getCode())
+                            .errorMessage(response.getProblem().getMsg())
                             .build()
             );
         }
@@ -58,7 +59,8 @@ public class DataService {
                     .id(response.getTxStatus().getTxId())
                     .state(response.getTxStatus().getTxState().toString())
                     .metadata(response.getTxStatus().getMetadata().toString())
-                    .problem(response.getProblem().toString())
+                    .errorCode(response.getProblem().getCode())
+                    .errorMessage(response.getProblem().getMsg())
                     .build());
         }
         return updates;

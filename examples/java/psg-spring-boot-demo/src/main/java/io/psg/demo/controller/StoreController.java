@@ -17,9 +17,14 @@ public class StoreController {
     @Autowired
     StoreService storeService;
 
-    @PostMapping("/store")
-    public void storeFileAtPath(@RequestParam("path") String path, @RequestParam("content") String fileContent) {
-        storeService.storeFile(path, fileContent);
+    @PostMapping("/storeAws")
+    public void storeFileAtAws(@RequestParam("path") String path, @RequestParam("content") String fileContent) {
+        storeService.storeAtAws(path, fileContent);
+    }
+
+    @PostMapping("/storeIpfs")
+    public void storeFileAtIpfs(@RequestParam("host") String host, @RequestParam("port") Integer port, @RequestParam("content") String fileContent) {
+        storeService.storeAtIpfs(host, port, fileContent);
     }
 
     @GetMapping("/store/result")

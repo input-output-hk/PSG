@@ -8,5 +8,6 @@ import lombok.Data;
 public class StoreResult {
     private String hash;
     private String url;
-    private String problem;
+    private String errorCode;
+    private String errorMessage;
 }

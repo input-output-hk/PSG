@@ -9,5 +9,6 @@ public class TransactionStatus {
     private String id;
     private String state;
     private String metadata;
-    private String problem;
+    private String errorCode;
+    private String errorMessage;
 }

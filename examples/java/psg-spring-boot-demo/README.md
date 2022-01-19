@@ -12,10 +12,10 @@ Install the following tools:
 
 1. Make sure, that you have registered an account in [PSG Self Serve UI](https://psg.iog.services/), purchased a package and generated API Token
 
-2. Set your username and API Token in the src/resources/application.properties file:
+2. Replace CLIENT_ID and API_TOKEN with your PSG Self Serve UI account values in the src/resources/application.properties file:
 ```shell
-psg.client=your_psg_username
-psg.token=your_api_token
+clientId=CLIENT_ID
+token=API_TOKEN
 ```
 
 3. Replace AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_S3_BUCKET and BUCKET_REGION with your S3 account values and replace demo-file-path with your desired path in src/resources/application.properties:
@@ -36,5 +36,8 @@ $ mvn spring-boot:run
 - SubmitMetadata:```$ curl -X POST "http://localhost:8080/submitmetadata?metadata=SOMEDATA"```
 
 ### StoreAndHash service
-- StoreAndHash (save file): ```$ curl -X POST "http://localhost:8080/store?path=test&content=test"```
+- StoreAndHash (save file at AWS S3): ```$ curl -X POST "http://localhost:8080/storeAws?path=test&content=test"```
+- StoreAndHash (save file at IPFS): ```$ curl -X POST "http://localhost:8080/storeIpfs?host=IPFS_HOST&port=IPFS_PORT&content=testcontent"```
+  **NOTE**: Do not forget to use your own IPFS_HOST and IPFS_PORT values while using POST /storeIpfs endpoint
 - StoreAndHash (get results): ```$ curl -X GET "http://localhost:8080/store/result"```
+
