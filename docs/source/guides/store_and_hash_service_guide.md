@@ -20,7 +20,7 @@ returns the permanent URL to the document, the SHA-256 hash (a unique fingerprin
 * [AWS S3](#storeandhashhttp)
 * [IPFS](#storeandhashipfs)
 
-### The StoreAndHash Service API
+## The StoreAndHash Service API
 
 This is a partial listing of the service
 ```
