@@ -1,18 +1,8 @@
-# The Metadata Service (server)
+# The Metadata Service - Configuration
 
-The metadata service wraps the work of posting metadata to the Cardano blockchain in a gRpc defined service.
+This document describes the service configuration and deployment.
 
-This document describes the service deployment.
-
-
-## The Service
-
-The service wraps access to the Cardano wallet backend API. It supports multiple wallets via its configuration file.
-It allows a single service instance to be used by
-various clients as a multi-tenant service.
-However, it also works as a microservice integrated with a particular solution.
-
-### Configuration
+## Configuration  
 
 The configuration is stored within the docker container in the `conf` folder of the application.
 It is possible to override configuration from the command line.
@@ -55,7 +45,7 @@ To have the low balance alarm monitor ignore the balance of this wallet set.
 
 `monitor-low-balance = false`
 
-### Deployment
+## Deployment
 
 The service is deployed as a docker container or as a Java Application as defined by the sbt native packager.
 
@@ -78,7 +68,7 @@ To override other application configuration from the command line e.g. from the 
 
 `-J-DNAME=VALUE`
 
-### Monitoring
+## Monitoring
 
 There are two http urls available for monitoring applications, the first is a trivial `alive` url that returns 200 if the service is up.
 

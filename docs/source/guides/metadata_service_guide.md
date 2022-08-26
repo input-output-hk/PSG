@@ -1,13 +1,8 @@
-# The Metadata Service
-
-The metadata service wraps the work of posting metadata to the Cardano blockchain in a gRpc defined service.
-
-This allows for the automatic generation of clients using the specified IDL.
+# The Metadata Service API
 
 This document describes using the service as an API. Working knowledge of gRpc is assumed.
 
-
-### The Metadata Service API
+## Service API
 
 This is a partial listing of the MetadataService (v0.2)
 ```
@@ -37,7 +32,7 @@ There are two functions, one for submitting metadata or checking on an already s
 
 Both methods provide a *stream* of responses.
 
-#### Submit Metadata
+### Submit Metadata
 
 To submit metadata the caller provides 
 
@@ -68,7 +63,7 @@ and finally, to indicate the transaction has been 'buried' under the requisite n
 In the case of a problem, that problem is described in the `problem` field of the response.`
 
 
-#### List Metadata
+### List Metadata
 
 List all metadata transactions between the dates given.  
 
