@@ -1,0 +1,72 @@
+//#service-request-reply
+syntax = "proto3";
+
+package iog.psg.service.storeandhash;
+
+option java_multiple_files = true;
+option java_package = "iog.psg.service.storeandhash";
+option java_outer_classname = "StoreAndHashService";
+
+import "errors.proto";
+import "common.proto";
+
+service StoreAndHashService {
+
+    rpc StoreAndHashHttp (stream StoreAndHashRequest) returns (stream StoreAndHashResponse);
+    rpc StoreAndHashIpfs (stream StoreAndHashIpfsRequest) returns (stream StoreAndHashResponse);
+}
+
+message StoreAndHashResponse {
+    oneof options {
+        Hash hash = 1;
+        string url = 2;
+        AppError problem = 3;
+    }
+}
+
+message Hash {
+   string hashType = 1;
+   bytes hashBytes = 2;
+   string hashBase64 = 3;
+}
+
+message Chunk {
+    bytes part = 1;
+}
+
+message UploadDetails {
+    string path = 1;
+    AwsCredentials aws = 2;
+    iog.psg.service.common.CredentialsMessage credentials = 3;
+}
+
+message AwsCredentials {
+   string keyId = 1;
+   string keySecret = 2;
+   string bucket = 3;
+   string region = 4;
+}
+
+message StoreAndHashRequest {
+    oneof options {
+        Chunk chunk = 1;
+        UploadDetails details = 2;
+    }
+}
+
+message StoreAndHashIpfsRequest {
+  oneof options {
+    Chunk chunk = 1;
+    IpfsUploadDetails details = 2;
+  }
+}
+
+message IpfsUploadDetails {
+  IpfsAddress ipfsAddress = 1; // e.g. "3.21.241.228:5001"
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+}
+
+message IpfsAddress {
+  string host = 1;
+  int32 port = 2;
+}
