@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-option java_multiple_files = true;
-option java_package = "sss.openstar.ui.rpc";
-
-message AppError {
-  string code = 1;
-  string msg = 2;
-}
