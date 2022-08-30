@@ -1,6 +1,6 @@
 # PSG Services - New User guide
 
-### As a new user, you need to perform the following steps to start working with PSG Services:
+## As a new user, you need to perform the following steps to start working with PSG Services:
 
 1. Open [PSG Services Login](https://psg.iog.services/) page
 2. Enter email and select the "Register as new user" button  
@@ -40,7 +40,7 @@
 
 11. **Now, you are ready to use PSG Services!**
 
-### PSG Services package description:
+## PSG Services package description:
 Deposit **10 Ada** (or multiples of 10) to purchase credits.
 
 Each **10 ADA** purchases **250 credits** and **30 days** in which to use them.

@@ -1,6 +1,6 @@
-### Restrict Amazon S3 Bucket Access to a Specific AWS user
+# Restrict Amazon S3 Bucket Access to a Specific AWS user
 
-#### 1. Create the user.
+## 1. Create the user.
 
 Follow the step to create a new user from [Creating an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)
 
@@ -9,7 +9,7 @@ Follow the step to create a new user from [Creating an IAM user](https://docs.aw
 - **Optional.** If you want to restrict access to the files stored on S3 bucket, you need to [create IAM user group](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_create.html) 
   with **AmazonS3FullAccess** permission and assign it to the newly created user
 
-#### 2. Create S3 bucket
+## 2. Create S3 bucket
 
 - Sign in to the AWS Management Console and open the Amazon S3 console at https://console.aws.amazon.com/s3/.
 
@@ -26,7 +26,7 @@ Follow the step to create a new user from [Creating an IAM user](https://docs.aw
 (For more details on creating s3 bucket check [Creating a bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html)
 
 
-#### 3. Configure Bucket policy
+## 3. Configure Bucket policy
 
 - Go to the permissions tab of the bucket and select `Edit` on the Bucket policy section.
 
