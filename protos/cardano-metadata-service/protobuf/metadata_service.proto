@@ -1,7 +1,7 @@
 //#service-request-reply
 syntax = "proto3";
 
-package iog.psg.service.metadata;
+package iog.psg.service.aggregate.metadata;
 
 option java_multiple_files = true;
 option java_outer_classname = "MetadataService";

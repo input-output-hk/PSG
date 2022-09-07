@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package iog.psg.service.nativeassets;
+package iog.psg.service.aggregate.nativeassets;
 
 option java_multiple_files = true;
 option java_outer_classname = "NativeAssets";
