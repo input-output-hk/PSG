@@ -1,6 +1,5 @@
 package io.psg.nativeassets.controller;
 
-import akka.Done;
 import io.psg.nativeassets.model.MintDetails;
 import io.psg.nativeassets.model.NativeAsset;
 import io.psg.nativeassets.model.Policy;
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
-
 
 @RestController
 @Log
@@ -49,9 +47,6 @@ public class NativeAssetsController {
                         .map(p -> conversionService.convert(p, Policy.class))
                         .collect(Collectors.toList()));
     }
-
-//    09822cd20e5db438cc5bbc0e8678be8bff87b37baeca1a662c7bca5a
-    //addr_test1vqusn9e6nc70rz4vfptuetrke0myrq0m9ul0zqwgewqgqecj5l9tl
 
     @DeleteMapping("/policies/{policyId}")
     public CompletableFuture<String> deletePolicy(@PathVariable String policyId) {

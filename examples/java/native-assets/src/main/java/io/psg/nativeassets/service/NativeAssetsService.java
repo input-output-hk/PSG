@@ -153,7 +153,6 @@ public class NativeAssetsService {
                         throw new NativeAssetException(response.getProblem());
                     }
                 });
-
     }
 
     //TODO to be finished

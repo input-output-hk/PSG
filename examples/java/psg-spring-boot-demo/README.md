@@ -4,7 +4,7 @@
 Install the following tools:
 
 - [Java](https://www.oracle.com/java/technologies/downloads/)
-- [Protocol Buffer Compiler](https://grpc.io/docs/protoc-installation/)
+- [Maven](https://maven.apache.org/)
 
 **NOTE:** make sure, that **for development and testing purposes** you are using **[PSG Services - Testnet](https://psg-testnet.iog.services/)**
 
@@ -17,27 +17,33 @@ Install the following tools:
 clientId=CLIENT_ID
 token=API_TOKEN
 ```
-
-3. Replace AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_S3_BUCKET and BUCKET_REGION with your S3 account values and replace demo-file-path with your desired path in src/resources/application.properties:
-```shell
-s3.key=AWS_ACCCESS_KEY
-s3.secret=AWS_SECRET_KEY
-s3.bucket=AWS_S3_BUCKET
-s3.region=BUCKET_REGION
-```
-
 3. Run Spring Boot application by executing the following command in terminal:
 ```shell
-$ mvn spring-boot:run
+$ ./mvnw spring-boot:run
 ```
-### Metadata service
-- ListMetadata: ```$ curl -X GET "http://localhost:8080/listmetadata"```
+### Native Asset service demo
+- Create Policy with `policyName`: 
+  - ```$ curl -X POST "http://localhost:8181/policies/{policyName}"```
+- Get all Policies
+  -  ```$ curl -X GET "http://localhost:8181/policies```
+- Get Policy with `policyId`
+  -  ```$ curl -X GET "http://localhost:8181/policies/{policyId}```
+- Delete Policy with `policyId`
+  - ```$ curl -X DELETE "http://localhost:8181/policies/{policyId}```
 
-- SubmitMetadata:```$ curl -X POST "http://localhost:8080/submitmetadata?metadata=SOMEDATA"```
 
-### StoreAndHash service
-- StoreAndHash (save file at AWS S3): ```$ curl -X POST "http://localhost:8080/storeAws?path=test&content=test"```
-- StoreAndHash (save file at IPFS): ```$ curl -X POST "http://localhost:8080/storeIpfs?host=IPFS_HOST&port=IPFS_PORT&content=testcontent"```
-  **NOTE**: Do not forget to use your own IPFS_HOST and IPFS_PORT values while using POST /storeIpfs endpoint
-- StoreAndHash (get results): ```$ curl -X GET "http://localhost:8080/store/result"```
 
+- Create Asset with `assetName` and `policyId`:
+  - ```$ curl -X POST "http://localhost:8181/assets/{assetName}/policy/{policyId}"```
+- Get all Assets
+  -  ```$ curl -X GET "http://localhost:8181/assets```
+- Get Asset with `assetName` and `policyId`
+  -  ```$ curl -X GET "http://localhost:8181/assets/{assetName}/policy{policyId}```
+- Delete Asset with `assetName` and `policyId`
+  - ```$ curl -X DELETE "http://localhost:8181/assets/{assetName}/policy{policyId}```
+
+
+- Mint Asset with `assetName` and `policyId`
+  - ```curl -X POST "localhost:8181/mint" -H "Content-Type: application/json"  -d ' {"name": "${AssetName}","policyId": "${policyId}", "amount": 10, "depth": 3, "nfts": []}'  ```
+   
+  
