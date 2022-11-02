@@ -1,7 +1,9 @@
 package io.psg.nativeassets.exception;
 
-public class NativeAssetException extends RuntimeException{
-    public NativeAssetException(String msg) {
-        super(msg);
+import sss.openstar.ui.rpc.AppError;
+
+public class NativeAssetException extends RuntimeException {
+    public NativeAssetException(AppError appError) {
+        super(appError.code() + "," + appError.msg());
     }
 }

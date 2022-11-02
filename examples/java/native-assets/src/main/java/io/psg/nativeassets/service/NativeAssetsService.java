@@ -16,6 +16,7 @@ import scala.$less$colon$less$;
 import scala.collection.immutable.HashMap;
 import scala.jdk.CollectionConverters;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -35,10 +36,10 @@ public class NativeAssetsService {
         return nativeAssetsApi.createPolicy(name, before, after)
                 .toCompletableFuture()
                 .thenApply(response -> {
-                    if (!response.getProblem().msg().isEmpty())
-                        throw new NativeAssetException(response.getProblem().msg());
-                    else {
+                    if (response.getProblem().msg().isEmpty())
                         return response.getPolicy();
+                    else {
+                        throw new NativeAssetException(response.getProblem());
                     }
 
                 });
@@ -47,10 +48,11 @@ public class NativeAssetsService {
     public CompletableFuture<Policy> getPolicy(String policyId) {
         return nativeAssetsApi.getPolicy(policyId).toCompletableFuture()
                 .thenApply(response -> {
-                    if (!response.getProblem().msg().isEmpty())
-                        throw new NativeAssetException(response.getProblem().msg());
-                    else {
+                    if (response.getProblem().msg().isEmpty())
                         return response.getPolicy();
+
+                    else {
+                        throw new NativeAssetException(response.getProblem());
                     }
 
                 });
@@ -59,10 +61,10 @@ public class NativeAssetsService {
     public CompletableFuture<List<Policy>> listPolicies() {
         return nativeAssetsApi.getPolices().toCompletableFuture()
                 .thenApply(response -> {
-                    if (!response.getProblem().msg().isEmpty())
-                        throw new NativeAssetException(response.getProblem().msg());
-                    else {
+                    if (response.getProblem().msg().isEmpty())
                         return CollectionConverters.SeqHasAsJava(response.policies()).asJava();
+                    else {
+                        throw new NativeAssetException(response.getProblem());
                     }
                 });
 
@@ -73,10 +75,10 @@ public class NativeAssetsService {
                 .deletePolicy(policyId)
                 .toCompletableFuture()
                 .thenApply(response -> {
-                    if (!response.getProblem().msg().isEmpty())
-                        throw new NativeAssetException(response.getProblem().msg());
-                    else {
+                    if (response.getProblem().msg().isEmpty())
                         return "the policy policyId=" + policyId + " successfully deleted";
+                    else {
+                        throw new NativeAssetException(response.getProblem());
                     }
                 });
 
@@ -87,9 +89,10 @@ public class NativeAssetsService {
         return nativeAssetsApi.createAsset(NativeAssetId.of(name, policyId))
                 .toCompletableFuture()
                 .thenApply(response -> {
-                    if (response.getProblem() != null) throw new NativeAssetException(response.getProblem().msg());
-                    else {
+                    if (response.getProblem().msg().isEmpty())
                         return response.getAsset();
+                    else {
+                        throw new NativeAssetException(response.getProblem());
                     }
                 });
     }
@@ -98,10 +101,10 @@ public class NativeAssetsService {
         return nativeAssetsApi.getAsset(NativeAssetId.of(name, policyId))
                 .toCompletableFuture()
                 .thenApply(response -> {
-                    if (!response.getProblem().msg().isEmpty())
-                        throw new NativeAssetException(response.getProblem().msg());
-                    else {
+                    if (response.getProblem().msg().isEmpty())
                         return response.getAsset();
+                    else {
+                        throw new NativeAssetException(response.getProblem());
                     }
                 });
     }
@@ -109,12 +112,13 @@ public class NativeAssetsService {
     public CompletableFuture<List<NativeAsset>> listNativeAssets() {
         return nativeAssetsApi.listAssets().toCompletableFuture()
                 .thenApply(response -> {
-                    if (!response.getProblem().msg().isEmpty())
-                        throw new NativeAssetException(response.getProblem().msg());
-                    else {
+                    if (response.getProblem().msg().isEmpty())
                         return CollectionConverters.SeqHasAsJava(response.assets()).asJava()
                                 .stream()
                                 .collect(Collectors.toList());
+                    else {
+                        throw new NativeAssetException(response.getProblem());
+
                     }
                 });
 
@@ -124,50 +128,56 @@ public class NativeAssetsService {
         return nativeAssetsApi.deleteAsset(NativeAssetId.of(name, policyId))
                 .toCompletableFuture()
                 .thenApply(response -> {
-                    if (response.problem().isDefined()) {
-                        throw new NativeAssetException(response.getProblem().msg());
-                    } else {
-                        return response.toString();
+                    if (response.getProblem().msg().isEmpty())
+                        return "the asset assetName= " + name + " policyId=" + policyId + " successfully deleted";
+                    else {
+                        throw new NativeAssetException(response.getProblem());
                     }
                 });
     }
 
-    public CompletableFuture mintNativeAsset(String name, String policyId, MintDetails mintDetails) {
+    public CompletableFuture<String> mintNativeAsset(String name, String policyId, MintDetails mintDetails) {
         return nativeAssetsApi.mintAsset(
                         NativeAssetId.of(name, policyId),
                         mintDetails.getAmount(),
                         mintDetails.getNfts().stream().map(nft -> conversionService.convert(nft, Nft.class)).collect(Collectors.toList()),
                         mintDetails.getDepth())
+                .completionTimeout(Duration.ofMinutes(2))
                 .runWith(Sink.head(), system)
+
                 .toCompletableFuture()
                 .thenApply(response -> {
-            if (!response.getProblem().msg().isEmpty()) {
-                return response.getProblem().msg();
-            } else {
-                return "the native asset with policyId=" + policyId + " name=" + name + " successfully deleted";
-            }
-        });
+                    if (response.getProblem().msg().isEmpty())
+                        return response.toString();
+                    else {
+                        throw new NativeAssetException(response.getProblem());
+                    }
+                });
 
     }
 
+    //TODO to be finished
     public CompletableFuture<Done> mintNativeAssetWithArbitraryMetadata(String name, String policyId, Long amount, Integer depth) {
         return nativeAssetsApi.mintAssetWithArbitraryMetadata(NativeAssetId.of(name, policyId), amount, Struct.of(new HashMap<>()), depth)
                 .run(system)
                 .toCompletableFuture();
     }
 
+    //TODO to be finished
     public CompletableFuture<Done> transferNativeAsset(String name, String policyId, String toAddress, Long amount, Integer depth) {
         return nativeAssetsApi.transferAsset(NativeAssetId.of(name, policyId), toAddress, amount, depth)
                 .run(system)
                 .toCompletableFuture();
     }
 
+    //TODO to be finished
     public CompletableFuture<Done> burnNativeAsset(String name, String policyId, Long amount, Integer depth) {
         return nativeAssetsApi.burnAsset(NativeAssetId.of(name, policyId), amount, depth)
                 .run(system)
                 .toCompletableFuture();
     }
 
+    //TODO to be finished
     public CompletableFuture sendAirDropBatch(Map struct, List airdrops) {
         return nativeAssetsApi.sendAirDropBatch(
                         Struct.of(CollectionConverters.MapHasAsScala(struct).asScala().toMap($less$colon$less$.MODULE$.refl())),
@@ -175,6 +185,7 @@ public class NativeAssetsService {
                 .toCompletableFuture();
     }
 
+    //TODO to be finished
     public CompletableFuture<AirDropStatusResponse> getAirDropStatus(String batchId) {
         return nativeAssetsApi.getAirDropStatus(batchId)
                 .toCompletableFuture();

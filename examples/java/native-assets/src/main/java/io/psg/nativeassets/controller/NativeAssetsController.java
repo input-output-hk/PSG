@@ -84,7 +84,7 @@ public class NativeAssetsController {
     }
 
     @DeleteMapping("/assets/{name}/policy/{policyId}")
-    public CompletableFuture deleteAsset(
+    public CompletableFuture<String> deleteAsset(
             @PathVariable String name,
             @PathVariable String policyId) {
         return nativeAssetsService.deleteNativeAsset(name, policyId);
@@ -92,7 +92,7 @@ public class NativeAssetsController {
 
     @PostMapping("/mint")
     @ResponseStatus(HttpStatus.CREATED)
-    public CompletableFuture mint(
+    public CompletableFuture<String> mint(
             @RequestBody MintDetails mintDetails) {
         return nativeAssetsService.mintNativeAsset(mintDetails.getName(), mintDetails.getPolicyId(), mintDetails);
     }
