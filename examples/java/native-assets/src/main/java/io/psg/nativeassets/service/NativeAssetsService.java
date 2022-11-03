@@ -143,8 +143,7 @@ public class NativeAssetsService {
                         mintDetails.getNfts().stream().map(nft -> conversionService.convert(nft, Nft.class)).collect(Collectors.toList()),
                         mintDetails.getDepth())
                 .completionTimeout(Duration.ofMinutes(2))
-                .runWith(Sink.head(), system)
-
+                .runWith(Sink.last(), system)
                 .toCompletableFuture()
                 .thenApply(response -> {
                     if (response.getProblem().msg().isEmpty())
