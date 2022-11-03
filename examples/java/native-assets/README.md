@@ -28,7 +28,6 @@ $ mvn package
 5. Run the fat jar
 ```shell
 $ java -jar target/native-assets-0.0.1-SNAPSHOT.jar
-
 ```
 ### Native Asset service demo
 - Create Policy with `policyName`:
