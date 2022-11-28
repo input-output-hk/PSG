@@ -39,7 +39,7 @@ The user of the PSG Metadata Service can happily ignore the state of the wallet 
 PSG Services has two major components, a set of gRpc endpoints :ref:`api` that allow the enterprise user to perform the aforementioned tasks
 related to the Cardano blockchain, and a user interface :ref:`ui` to help users pay for and configure those services.
 
-Further details on registering and paying in Ada for the services is available on this site, and you can view walkthrough
+Further details and :ref:`pricing` information for the services are available on this site, and you can view walkthrough
 videos on our `youtube channel <https://youtube.com/playlist?list=PLnPTB0CuBOByp2KWl22ElFZsb63s72O1v>`_
 
 Finally, there is a duplicate testnet facing PSG Services platform for evaluation and development purposes.
@@ -73,6 +73,29 @@ API and Features
 * Submit metadata and attachments as a part of email message using :ref:`mail clients from UI and commandline tools <mail>`
 * Other :ref:`features <features>`, like checking transaction metadata
 
+.. _pricing:
 
+Price List
+------
 
+(API call prices include all network transaction fees)
 
+* Metadata service
+    * Submit Metadata: 10 credits
+    * List Transactions: 1 credit
+* Store And Hash service
+    * Store And Hash: 1 credit
+* Email
+    * Authenticate Email: 15 credits
+* Native Assets service
+    * Create / Delete Policy: 5 credits
+    * Get Policy / List Policies: 1 credit
+    * Import Policy: 5 credits
+    * Create / Delete Asset: 5 credits
+    * Get Asset / List Assets: 1 credit
+    * Fund Policy (per 1 ADA): 25 credits
+    * Mint Asset: 150 credits
+    * Transfer Asset: 25 credits
+    * Burn Asset: 25 credits
+    * Perform Airdrop (per NFT): 25 credits
+    * Check Airdrop Status: 1 credit
