@@ -1,5 +1,6 @@
 package io.psg.nativeassets.model;
 
+
 import lombok.Builder;
 import lombok.Data;
 

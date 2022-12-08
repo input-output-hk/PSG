@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.psg.nativeassets.converters.PolicyConverter;
 import iog.psg.client.nativeassets.NativeAssetsApi;
 import iog.psg.client.nativeassets.NativeAssetsApiBuilder;
+import iog.psg.client.nativeassets.multisig.v1.NativeAssetsMultisigApi;
+import iog.psg.client.nativeassets.multisig.v1.NativeAssetsMultisigApiBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,6 +21,12 @@ public class NativeAssetsApplication implements WebMvcConfigurer  {
 	@Value("${token}")
 	private String token;
 
+	@Value("${host}")
+	private String host;
+
+	@Value("${port}")
+	private Integer port;
+
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
 		registry.addConverter(new PolicyConverter());
@@ -30,6 +38,17 @@ public class NativeAssetsApplication implements WebMvcConfigurer  {
 				.withClientId(clientId)
 				.withApiKey(token)
 				.withGrpcClientSettingsConfigName("test")
+				.build();
+	}
+
+	@Bean
+	public NativeAssetsMultisigApi multisigApi() {
+		return NativeAssetsMultisigApiBuilder.create()
+				.withClientId(clientId)
+				.withApiKey(token)
+				.withPort(port)
+				.withHost(host)
+				.withUseTls(true)
 				.build();
 	}
 

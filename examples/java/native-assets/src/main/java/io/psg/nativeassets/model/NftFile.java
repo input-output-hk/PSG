@@ -1,6 +1,5 @@
 package io.psg.nativeassets.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.*;
 
 import java.util.List;

@@ -26,6 +26,14 @@
 			<id>stepsoft</id>
 			<url>https://nexus.iog.solutions/repository/stepsoft-releases/</url>
 		</repository>
+		<repository>
+			<id>sonatype-releases</id>
+			<url>https://oss.sonatype.org/content/repositories/releases/</url>
+		</repository>
+		<repository>
+			<id>sonatype-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</repository>
 
 	</repositories>
 	<dependencies>
@@ -41,10 +49,23 @@
 		</dependency>
 
 		<dependency>
-			<groupId>iog.psg</groupId>
+			<groupId>solutions.iog</groupId>
 			<artifactId>native-assets-client_2.13</artifactId>
-			<version>0.3.17</version>
+			<version>0.3.18-RC8-7-snapshot-1-eb56c13e-SNAPSHOT</version>
 		</dependency>
+
+		<dependency>
+			<groupId>solutions.iog</groupId>
+			<artifactId>metadata-client_2.13</artifactId>
+			<version>0.3.18-RC8-7-snapshot-1-eb56c13e-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>solutions.iog</groupId>
+			<artifactId>store-and-hash-client_2.13</artifactId>
+			<version>0.3.18-RC8-7-snapshot-1-eb56c13e-SNAPSHOT</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
