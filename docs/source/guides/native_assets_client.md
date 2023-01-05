@@ -5,7 +5,7 @@ This document describes usage of Native Assets Client.
 You can read more about native assets in the [Cardano documentation](https://docs.cardano.org/native-tokens/learn).
 
 Native Assets Client wraps the work of **minting**, **transferring**, and **burning** native assets 
-on the Cardano blockchain with multiple witnesses in the form of a java command-line tool. It also support the 
+on the Cardano blockchain the form of a java command-line tool. It also support the **minting** and **burning** with multiple signatures
 
 ## Installation:
 - Download the latest version from the [repository](https://psg-releases.s3.us-east-2.amazonaws.com/native-assets-client-0.3.19-RC6.zip)
