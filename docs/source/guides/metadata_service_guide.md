@@ -2,7 +2,7 @@
 
 This document describes using the service as an API. Working knowledge of gRpc is assumed.
 
-## Service API
+## Service API Protobuf
 
 This is a partial listing of the MetadataService (v0.2)
 ```
@@ -75,3 +75,5 @@ List all metadata transactions between the dates given.
 
 **Note**: on the very rare occasions where the internal service configuration drastically changes transactions associated with a clientId may not be returned. 
 Client applications that have a critical long term dependency on remembering the ids of the transactions they posted are advised to make an independent record of the transaction id.   
+
+## Service API client Jar
