@@ -436,21 +436,14 @@ message EmptyResponse {
 * Make sure, that you have registered an account in PSG Self Serve UI, purchased a package and generated API Token
 * Replace `clientId` with your PSG Self serve account
 * Replace `token` with your PSG Self Serve generated API token
-* Replace `host` with server host value
-* Replace `port` with server port value
-* Replace `useTls` with boolean value
+* By default, client will connect to psg.iog.services, which is operating on Cardano mainnet. There are additional methods on the builder that allows you to specify `host` to connect to different environments (like one operating on preprod Cardano network).
 
 ```java
 public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
-        return NativeAssetsMultisigApiBuilder.create()
-        .withClientId(clientId)
-        .withApiKey(token)
-        .withHost(host)
-        .withPort(port)
-        .withUseTls(useTls)
-        .build();
-
-        }
+        return NativeAssetsBuilder
+        .create(apiKey, clientId)
+        .buildMultisig();
+}
 ```
 
 ### Create the Policy which allows to burn/mint the holders of secret keys associated with provided public keys
