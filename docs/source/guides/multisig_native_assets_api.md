@@ -501,6 +501,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
     }
 ```
 ### Get the Policy by policy id
+* Replace `policyId` with Id of Policy 
 ```java
     public CompletionStage<Policy> getPolicyById() {
         String policyId = "policyId";
@@ -515,6 +516,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
     }
 ```
 ### Get the Policy by policy name
+* Replace `policyByName` with policy name 
 ```java
     public CompletionStage<Policy> getPolicyByName() {
         String policyByName = "PolicyByName";
@@ -530,7 +532,6 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 ```
 ### List all created policies
 ```java
-
     public CompletionStage<List<Policy>> listPolices() {
         return nativeAssetsMultisigApi.listPolices()
                 .thenApply(response -> {
@@ -543,6 +544,10 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
     }
 ```
 ### Create mint transaction for NFT
+* Replace `assetName` with the name of NFT
+* Replace `policyId` the Id of Policy
+* Replace `paymentAddress` the address from which the mint fee will be deducted
+* Replace `mintTargetAddress` - the address to which the asset will be minted
 ```java
     public CompletionStage<String> createMintTransaction() {
         String assetName = "assetName";
@@ -569,6 +574,12 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
     }
 ```
 ### Create mint transaction native asset
+* Replace `assetName` with the name of Native Asset
+* Replace `policyId` the Id of Policy 
+* Replace `paymentAddress` the address from which the mint fee will be deducted
+* Replace `mintTargetAddress` - the address to which the asset will be minted
+* Replace `amount` - with amount of Native Asset you want to mint
+* Replace `json` - in the form of Java Map. This json/map should correspond with **(https://developers.cardano.org/docs/transaction-metadata/)**
 ```java
 
     public CompletionStage<String> createMintTransactionWithArbitraryMetadata() {
@@ -617,6 +628,11 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
     }
 ```
 ### Create transfer transaction
+* Replace `assetName` with the name of Native Asset
+* Replace `policyId` the Id of Policy
+* Replace `fromAddress` with the address from which the asset will be transferred out
+* Replace `toAddress` with the address to which the asset will be transferred in
+* Replace `amount` with amount of Native Asset you want to transferr
 ```java
     public CompletionStage<String> createTransferTransaction() {
         String policyId = "policyId";
@@ -636,6 +652,10 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
     }
 ```
 ### Create burn transaction
+* Replace `policyId` the Id of Policy
+* Replace `assetName` with the name of Native Asset
+* Replace `targetAddress` - the address from which the asset will be burnt
+* Replace `amount` - with amount of Native Asset you want to burn
 ```java
     public CompletionStage<String> createBurnTransaction() {
         String policyId = "policyId";
@@ -653,6 +673,8 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
     }
 ```
 ### Add witness with secret key
+* Replace `txId` with the Id Transaction
+* Replace `secretKeyHex` with the private key in Hex format, which will be used to sign the transaction with
 ```java
     public CompletionStage<String> addWitnessWithSecretKey() throws CborSerializationException {
         String txId = "ab2343245";
@@ -669,6 +691,9 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
     }
 ```
 ### Add witness with public key and signature
+* Replace `txId` with the Id Transaction
+* Replace `publicKeyHex` with the public key in Hex format, which is used for verification of signature provided
+* Replace `signatureHex` with signature in Hex format. This signature must be created with secret key that corresponds to public key above
 ```java
     public CompletionStage<String> addWitnessWithPublicKey() throws CborSerializationException {
         String txId = "ab2343245";
@@ -687,6 +712,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
     }
 ```
 ### Get Transaction by ID
+* Replace `txId` with the Id Transaction
 ```java
     public CompletionStage<Long> getTx() throws CborSerializationException {
         String txId = "ab2343245";
@@ -716,6 +742,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
     }
 ```
 ### List all Transactions belonging to policy with ID
+* Replace `policyId` with the Policy id
 ```java
     public CompletionStage<List<String>> listTxsByPolicyId()  {
         String policyId = "ab2343245";
@@ -731,6 +758,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
     }
 ```
 ### List all witnesses
+* Replace `txId` with the Id Transaction
 ```java
     public CompletionStage<List<String>> listWitnesses()  {
         String txId = "ab2343245";
@@ -747,6 +775,8 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 
 ```
 ### Submit the transaction to the blockchain
+* Replace `txId` with the Id Transaction
+* Replace `depth` with the Integer - specifies the number of network Confirmations required to treat the transaction as Confirmed
 ```java
     public CompletionStage<String> sendTransaction()  {
         String txId = "ab2343245";
@@ -756,7 +786,8 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
         return completableFuture;
     }
 ```
-
+##### The Observer
+The example of observer. This might be used in the example above. It gets the events about the transaction sent details.
 ```java
     private <V> StreamObserver<V> streamObserver(CompletableFuture<String> completableFuture,
                                                  Function<V, String> converter) {
@@ -784,8 +815,8 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
     }
 ```
 ### Generate cardano enterprise address
+* Replace `hexPubKey` with the public key in Hex format, for which the Cardano Address will be generated
 ```java
-
     public Address generateAddress() throws CborSerializationException {
         String hexPubKey = "ac3c4";
         return nativeAssetsMultisigApi.generateAddress(VerificationKey.create(HexUtil.decodeHexString(hexPubKey)), Networks.preprod());
@@ -793,6 +824,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 ```
 
 ### Generate public key
+* Replace `hexSecKey` with the secret key in Hex format, for which the Public Key will be generated
 ```java
     public VerificationKey generateVerKey() throws CborSerializationException {
         String hexSecKey = "ac3c4";
