@@ -456,15 +456,15 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 ### Create the Policy which allows to burn/mint the holders of secret keys associated with provided public keys
 * Replace `policyName` with arbitrary policy name
 * Replace `hexPubKey` public key in hex format. The policy allows only the holder of associated `secret key` to the provided public key to mint/burn
-* Replace `beforeSlot` - optional - if specified it defines the `start` of time window in which the policy allows to burn/mint 
-* Replace `afterSlot` - optional - if specified it defines the `end` of time window in which the policy allows to burn/mint
+* Replace `beforeSlot` - optional - if specified it defines the `end` of time window in which the policy allows to burn/mint 
+* Replace `afterSlot` - optional - if specified it defines the `start` of time window in which the policy allows to burn/mint
 ```java
     public CompletionStage<Policy> createPolicyWithPublicKeys() throws CborSerializationException {
         String policyName = "policy";
         String hexPubKey1 = "ac3c4";
         String hexPubKey1 = "bd4d5";
-        Optional<Integer> beforeSlot = Optional.of(3);
-        Optional<Integer> afterSlot = Optional.of(10);
+        Optional<Integer> beforeSlot = Optional.of(8231864);
+        Optional<Integer> afterSlot =  Optional.of(8200864);
         VerificationKey pubKey = VerificationKey.create(HexUtil.decodeHexString(hexPubKey));
 
         return nativeAssetsMultisigApi.createPolicy(policyName, beforeSlot, afterSlot, Arrays.asList(pubKey))
@@ -480,14 +480,14 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 ### Create the Policy with secret keys
 * Replace `policyName` with arbitrary policy name
 * Replace `hexSecKey` the secret key in hex format. The policy allows only the holder of this key to mint/burn
-* Replace `beforeSlot` - optional - if specified it defines the `start` of time window in which the policy allows to burn/mint
-* Replace `afterSlot` - optional - if specified it defines the `end` of time window in which the policy allows to burn/mint
+* Replace `beforeSlot` - optional - if specified it defines the `end` of time window in which the policy allows to burn/mint
+* Replace `afterSlot` - optional - if specified it defines the `start` of time window in which the policy allows to burn/mint
 ```java
     public CompletionStage<Policy> createPolicyWithSecKeys() throws CborSerializationException {
         String policyName = "policy";
         String hexSecKey = "ac3c4";
-        Optional<Integer> beforeSlot = Optional.of(3);
-        Optional<Integer> afterSlot = Optional.of(10);
+        Optional<Integer> beforeSlot = Optional.of(8231864);
+        Optional<Integer> afterSlot =  Optional.of(8200864);
         SecretKey secKey = SecretKey.create(HexUtil.decodeHexString(hexSecKey));
 
         return nativeAssetsMultisigApi.createPolicyUsingPrivateKeys(policyName, beforeSlot, afterSlot, Arrays.asList(secKey))
