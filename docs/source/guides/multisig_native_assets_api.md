@@ -472,7 +472,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return response.getPolicy();
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
@@ -495,7 +495,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return response.getPolicy();
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
@@ -510,7 +510,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return response.getPolicy();
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
@@ -525,7 +525,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return response.getPolicy();
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
@@ -538,7 +538,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return JavaConverters.seqAsJavaList(response.policies());
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
@@ -568,7 +568,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return response.getTx().tx();
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
@@ -622,7 +622,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return response.getTx().tx();
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
@@ -646,7 +646,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return response.getTx().tx();
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
@@ -667,7 +667,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return response.getTx().tx();
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
@@ -685,7 +685,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return "signature added";
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
@@ -706,7 +706,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return "signature added";
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
@@ -722,7 +722,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return response.getTx().confirmations();
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
@@ -736,7 +736,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return JavaConverters.asJava(response.transactions()).stream().map(ur -> ur.txId()).collect(Collectors.toList());
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
@@ -752,7 +752,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return JavaConverters.asJava(response.transactions()).stream().map(ur -> ur.txId()).collect(Collectors.toList());
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
@@ -768,7 +768,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                     if (response.getProblem().msg().isEmpty())
                         return  JavaConverters.asJava(response.verKeyHashes());
                     else {
-                        throw new NativeAssetException(response.getProblem());
+                        throw new RuntimeException(response.getProblem().msg());
                     }
                 });
     }
