@@ -1,14 +1,15 @@
 package io.psg.nativeassets;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.psg.nativeassets.converters.PolicyConverter;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import iog.psg.client.nativeassets.NativeAssetsApi;
-import iog.psg.client.nativeassets.NativeAssetsApiBuilder;
+import iog.psg.client.nativeassets.NativeAssetsBuilder;
+import iog.psg.client.nativeassets.multisig.v1.NativeAssetsMultisigApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
@@ -19,18 +20,16 @@ public class NativeAssetsApplication implements WebMvcConfigurer  {
 	@Value("${token}")
 	private String token;
 
-	@Override
-	public void addFormatters(FormatterRegistry registry) {
-		registry.addConverter(new PolicyConverter());
-	}
-
 	@Bean
 	public NativeAssetsApi nativeAssetsApi() {
-		return NativeAssetsApiBuilder.create()
-				.withClientId(clientId)
-				.withApiKey(token)
-				.withGrpcClientSettingsConfigName("test")
-				.build();
+		Config config = ConfigFactory.defaultApplication()
+				.getConfig("akka.grpc.client.test")
+				.resolve();
+		return NativeAssetsBuilder.create(config).build();
+	}
+	@Bean
+	public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
+		return NativeAssetsBuilder.create(clientId, token).buildMultisig();
 	}
 
 	public static void main(String[] args) throws JsonProcessingException {

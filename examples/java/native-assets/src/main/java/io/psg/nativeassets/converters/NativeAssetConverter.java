@@ -1,6 +1,6 @@
 package io.psg.nativeassets.converters;
 
-import iog.psg.service.nativeassets.NativeAsset;
+import iog.psg.service.nativeassets.native_assets.NativeAsset;
 import org.springframework.core.convert.converter.Converter;
 
 @ConverterComponent

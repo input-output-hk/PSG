@@ -1,4 +1,4 @@
-package io.psg.nativeassets.configiration;
+package io.psg.nativeassets.configuration;
 
 import io.psg.nativeassets.converters.ConverterComponent;
 import org.springframework.context.annotation.Bean;

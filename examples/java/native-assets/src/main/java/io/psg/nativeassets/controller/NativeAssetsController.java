@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @Log
+@RequestMapping("/")
 public class NativeAssetsController {
     @Autowired
     private NativeAssetsService nativeAssetsService;
@@ -91,6 +92,20 @@ public class NativeAssetsController {
             @RequestBody MintDetails mintDetails) {
         return nativeAssetsService.mintNativeAsset(mintDetails.getName(), mintDetails.getPolicyId(), mintDetails);
     }
+
+//    @PostMapping("/mint")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public CompletableFuture<String> minta(
+//            @RequestBody MintDetails mintDetails) {
+//        return nativeAssetsService.mintNativeAssetWithArbitraryMetadata(mintDetails.getName(), mintDetails.getPolicyId(), mintDetails.getAmount(), mintDetails.getDepth());
+//    }
+//
+//    @PostMapping("/mint")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public CompletableFuture<String> burn(
+//            @RequestBody MintDetails mintDetails) {
+//        return nativeAssetsService.burnNativeAsset(mintDetails.getName(), mintDetails.getPolicyId(), mintDetails.getAmount(), mintDetails.getDepth());
+//    }
 
 
 }

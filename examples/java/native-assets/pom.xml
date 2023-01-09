@@ -11,23 +11,12 @@
 	<groupId>io.psg</groupId>
 	<artifactId>native-assets</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>native-assets</name>
+	<name>native-assets-example</name>
 	<description>Demo project for native assets service</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>iog-solutions</id>
-			<url>https://nexus.iog.solutions/repository/maven-release/</url>
-		</repository>
-		<repository>
-			<id>stepsoft</id>
-			<url>https://nexus.iog.solutions/repository/stepsoft-releases/</url>
-		</repository>
-
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -41,17 +30,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>iog.psg</groupId>
+			<groupId>solutions.iog</groupId>
 			<artifactId>native-assets-client_2.13</artifactId>
-			<version>0.3.17</version>
+			<version>0.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
-
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>

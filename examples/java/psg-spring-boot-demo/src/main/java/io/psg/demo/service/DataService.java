@@ -1,15 +1,11 @@
 package io.psg.demo.service;
 
 import io.psg.demo.model.TransactionStatus;
-import iog.psg.service.common.CredentialsMessage;
-import iog.psg.service.metadata.*;
 import lombok.extern.java.Log;
-import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service

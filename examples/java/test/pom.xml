@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>test</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>solutions.iog</groupId>
+            <artifactId>native-assets-client_2.13</artifactId>
+            <version>0.3.19-RC9-1-cd1327a2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>solutions.iog</groupId>
+            <artifactId>store-and-hash-client_2.13</artifactId>
+            <version>0.3.19-RC9-2-6016be35-20230106-1433-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>solutions.iog</groupId>
+            <artifactId>metadata-client_2.13</artifactId>
+            <version>0.3.19-RC9-2-6016be35-20230106-1433-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+</project>
