@@ -40,6 +40,10 @@ This section describes the service API and how to use it.
    Native Assets Service - API <guides/native_assets_api.md>
    Native Assets Client <guides/native_assets_client.md>
 
+   Multisig Native Assets Service - API <guides/multisig_native_assets_api.md>
+   Multisig Native Assets Client SDK HOW TO <guides/multisig_native_assets_sdk.md>
+   Multisig Native Assets Client CLI <guides/multisig_native_assets_client.md>
+
 .. raw:: html
 
    <p align="center">
