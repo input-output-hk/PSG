@@ -74,4 +74,96 @@ List all metadata transactions between the dates given.
 **Note**: if a transaction has no metadata, it will not be listed by this call.
 
 **Note**: on the very rare occasions where the internal service configuration drastically changes transactions associated with a clientId may not be returned. 
-Client applications that have a critical long term dependency on remembering the ids of the transactions they posted are advised to make an independent record of the transaction id.   
+Client applications that have a critical long term dependency on remembering the ids of the transactions they posted are advised to make an independent record of the transaction id.
+
+# Client SDK API - How to
+
+## maven dependency
+```xml
+<dependency>
+     <groupId>solutions.iog</groupId>
+     <artifactId>metadata-client_2.13</artifactId>
+    <version>0.0.3</version>
+</dependency>
+```
+### Create the api
+```java
+    MetadataAsync metadataApi = new MetadataAsync("API_TOKEN", "CLIENT_ID", "localhost", 2000);
+```
+
+### Submit the Metadata to Blockchain
+* Replace `metadata` with string value that represents your metadata
+```java
+    public CompletionStage<String> submitMetadata() {
+        String metadata= "MyMetadata";
+        CompletableFuture<String> completableFuture = new CompletableFuture();
+        metadataApi.submitMetadata(metadata, streamObserver(completableFuture, r -> r.getTxStatus().toString()));
+        return completableFuture;
+
+    }
+```    
+
+### Get the Metadata
+* Replace `txId` with the Id Transaction
+```java
+    public CompletionStage<String> transactionMetadata() {
+        String txHash = "234234acb";
+        CompletableFuture<String> completableFuture = new CompletableFuture();
+        metadataApi.transactionMetadata(txHash, streamObserver(completableFuture, r -> r.getMetadata().toString()));
+        return completableFuture;
+
+    }
+```
+
+### List the Metadata transaction statuses
+* Replace `startAt` with timestamp from which metadata should be listed
+* Replace `endAt` with timestamp to which metadata should be listed
+```java
+    public CompletionStage<String> listMetadata() {
+        Timestamp startAt = Timestamp.of(100000000, 0);
+        Timestamp endAt = Timestamp.of(200000000, 0);
+        CompletableFuture<String> completableFuture = new CompletableFuture();
+        metadataApi.listMetadata(startAt, endAt, streamObserver(completableFuture, r -> r.getTxStatus().toString()));
+        return completableFuture;
+
+    }
+```
+
+##### The Observer
+The example of observer. This might be used in the example above. It gets the events about the transaction sent details.
+```java
+    private <V> StreamObserver<V> streamObserver(CompletableFuture<String> completableFuture,
+                                                 Function<V, String> converter) {
+        return new StreamObserver<V>() {
+            List<String> buffer = new ArrayList();
+
+            @Override
+            public void onNext(V res) {
+                buffer.add(converter.apply(res));
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                buffer.add(throwable.toString());
+            }
+
+            @Override
+            public void onCompleted() {
+                String res = buffer
+                        .stream()
+                        .collect(Collectors.joining("\n"));
+                completableFuture.complete(res);
+            }
+        };
+    }
+```
+
+
+
+
+
+
+
+
+
+

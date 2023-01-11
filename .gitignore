@@ -1,0 +1,13 @@
+.idea
+target
+*.log
+.bsp
+project/targettmp
+temp
+tmp
+application-local.conf
+.env
+.run
+build/
+.gradle/
+sss-hsql-native-assets*
