@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package iog.psg.service.nativeassets;
+
+option java_multiple_files = true;
+option java_outer_classname = "NativeAssetsModel";
+option java_package = "iog.psg.service.nativeassets";
+
+message NativeAssetId {
+  string name = 1;
+  string policyId = 2;
+}
+
+message NativeAsset {
+  NativeAssetId id = 1;
+  uint64 amount = 2;
+}
+
+// CIP 25 compliant Nft
+message Nft {
+  string assetName = 1;
+  string name = 2;
+  repeated string image = 3;
+  string mediaType = 4;
+  repeated string description = 5;
+  repeated NftFile files = 6;
+}
+
+message NftFile {
+  string name = 1;
+  string mediaType = 2;
+  repeated string src = 3;
+}
+
+message TimeBounds {
+  uint32 after = 1;
+  uint32 before = 2;
+}
+
+message BlockInfo {
+  uint32 epochNumber = 1;
+  uint32 number = 2;
+  string hash = 3;
+  uint64 height = 4;
+}
+
+message TxInfo {
+  string txId = 1;
+  BlockInfo block = 2;
+}
+
+message NativeAssetTransaction {
+  NativeAsset asset = 1;
+  TxInfo txInfo = 2;
+}

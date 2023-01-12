@@ -1,0 +1,283 @@
+syntax = "proto3";
+
+package iog.psg.service.nativeassets;
+
+option java_multiple_files = true;
+option java_outer_classname = "NativeAssets";
+option java_package = "iog.psg.service.nativeassets";
+
+import "google/protobuf/struct.proto";
+
+import "common.proto";
+import "errors.proto";
+import "native_assets.proto";
+
+service NativeAssetsService {
+  rpc importPolicy(ImportPolicyRequest) returns (ImportPolicyResponse);
+  rpc createPolicy(CreatePolicyRequest) returns (CreatePolicyResponse);
+  rpc getPolicy(GetPolicyRequest) returns (GetPolicyResponse);
+  rpc listPolicies(ListPoliciesRequest) returns (ListPoliciesResponse);
+  rpc deletePolicy(DeletePolicyRequest) returns (DeletePolicyResponse);
+
+  rpc createNativeAsset(CreateNativeAssetRequest) returns (CreateNativeAssetResponse);
+  rpc getNativeAsset(GetNativeAssetRequest) returns (GetNativeAssetResponse);
+  rpc listNativeAssets(ListNativeAssetsRequest) returns (ListNativeAssetsResponse);
+  rpc deleteNativeAsset(DeleteNativeAssetRequest) returns (DeleteNativeAssetResponse);
+
+  rpc mintNativeAsset(MintNativeAssetRequest) returns (stream MintNativeAssetResponse);
+  rpc mintNativeAssetWithArbitraryMetadata(MintNativeAssetWithArbitraryMetadataRequest) returns (stream MintNativeAssetResponse);
+  rpc transferNativeAsset(TransferNativeAssetRequest) returns (stream TransferNativeAssetResponse);
+  rpc burnNativeAsset(BurnNativeAssetRequest) returns (stream BurnNativeAssetResponse);
+
+  rpc fund(FundNativeAssetRequest) returns (stream FundNativeAssetResponse);
+
+  rpc sendAirDropBatch(AirDropBatchRequest) returns (AirDropBatchResponse);
+  rpc getAirDropStatus(AirDropStatusRequest) returns (AirDropStatusResponse);
+}
+
+message CreatePolicyRequest {
+  string name = 1;
+  TimeBounds timeBounds = 2;
+  iog.psg.service.common.CredentialsMessage credentials = 3;
+}
+
+message CreatePolicyResponse {
+  oneof result {
+    AppError problem = 1;
+    Policy policy = 2;
+  }
+}
+
+message GetPolicyRequest {
+  string policyId = 1;
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+}
+
+message GetPolicyResponse {
+  oneof result {
+    AppError problem = 1;
+    Policy policy = 2;
+  }
+}
+
+message ListPoliciesRequest {
+  iog.psg.service.common.CredentialsMessage credentials = 1;
+}
+
+message ListPoliciesResponse {
+  AppError problem = 1;
+  repeated Policy policies = 2;
+}
+
+message DeletePolicyRequest {
+  string policyId = 1;
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+}
+
+message DeletePolicyResponse {
+  AppError problem = 1;
+}
+
+message Policy {
+  string name = 1;
+  string policyId = 2;
+  string paymentAddress = 3;
+  uint64 paymentAddressAmount = 4;
+}
+
+message MintNativeAssetRequest {
+  NativeAssetId id = 1;
+  uint64 amount = 2;
+  iog.psg.service.common.CredentialsMessage credentials = 3;
+  repeated Nft nfts = 4;
+  uint32 depth = 5;
+}
+message MintNativeAssetWithArbitraryMetadataRequest {
+  NativeAssetId id = 1;
+  uint64 amount = 2;
+  iog.psg.service.common.CredentialsMessage credentials = 3;
+  google.protobuf.Struct metadata = 4;
+  uint32 depth = 5;
+}
+
+message ListNativeAssetsRequest {
+  string policyId = 1;
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+}
+
+message FundNativeAssetRequest {
+  string policyId = 1;
+  uint64 amountInLovelace = 2;
+  iog.psg.service.common.CredentialsMessage credentials = 3;
+  uint32 depth = 4;
+}
+
+message Key {
+  string verificationKey = 1;
+  string signingKey = 2;
+}
+
+message ImportPolicyRequest {
+  string name = 1;
+  string policyAsString = 2;
+  Key policyKey = 3;
+  repeated Key moreKeys = 4;
+  iog.psg.service.common.CredentialsMessage credentials = 5;
+}
+
+
+message CreateNativeAssetRequest {
+  NativeAssetId id = 1;
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+}
+
+message GetNativeAssetRequest {
+  NativeAssetId id = 1;
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+}
+
+message GetNativeAssetResponse {
+  oneof result {
+    AppError problem = 1;
+    NativeAsset asset = 2;
+  }
+}
+
+message DeleteNativeAssetRequest {
+  NativeAssetId id = 1;
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+}
+
+message MintNativeAssetResponse {
+  oneof result {
+    AppError problem = 1;
+    NativeAssetTransaction assetTx = 2;
+  }
+}
+
+message ListNativeAssetsResponse {
+  AppError problem = 1;
+  repeated NativeAsset assets = 2;
+}
+
+message NativeAssetPaymentDetails {
+  uint64 paymentAddressLovelaceBalance = 1;
+  string paymentAddress = 2;
+  uint64 balance = 3;
+}
+
+message FundNativeAssetTransaction {
+  NativeAssetPaymentDetails paymentDetails = 1;
+  TxInfo txInfo = 2;
+}
+
+message FundNativeAssetResponse {
+  oneof result {
+    AppError problem = 1;
+    FundNativeAssetTransaction fundTx = 2;
+  }
+}
+
+message ImportPolicyResponse {
+  oneof result {
+    AppError problem = 1;
+    NativeAssetId assetId = 2;
+  }
+}
+
+message CreateNativeAssetResponse {
+  oneof result {
+    AppError problem = 1;
+    NativeAsset asset = 2;
+  }
+}
+
+message DeleteNativeAssetResponse {
+  AppError problem = 1;
+}
+
+message GetNativeAssetBalanceRequest {
+  NativeAssetId id = 1;
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+}
+
+message GetNativeAssetBalanceResponse {
+  oneof result {
+    AppError problem = 1;
+    NativeAsset asset = 2;
+  }
+}
+
+message TransferNativeAssetRequest {
+  NativeAssetId id = 1;
+  uint64 amount = 2;
+  string toAddress = 3;
+  iog.psg.service.common.CredentialsMessage credentials = 4;
+  uint32 depth = 5;
+}
+
+message TransferNativeAssetResponse {
+  oneof result {
+    AppError problem = 1;
+    NativeAssetTransaction assetTx = 2;
+  }
+}
+
+message BurnNativeAssetRequest {
+  NativeAssetId id = 1;
+  uint64 amount = 2;
+  iog.psg.service.common.CredentialsMessage credentials = 3;
+  uint32 depth = 4;
+}
+
+message BurnNativeAssetResponse {
+  oneof result {
+    AppError problem = 1;
+    NativeAssetTransaction assetTx = 2;
+  }
+}
+
+message AirDropBatchRequest {
+  iog.psg.service.common.CredentialsMessage credentials = 1;
+  repeated AirDrop airdrops  = 2;
+  google.protobuf.Struct metadata = 3;
+}
+
+message AirDropBatchResponse {
+  oneof result {
+    AppError problem = 1;
+    string batchId = 2;
+  }
+}
+
+message AirDropStatusRequest {
+  iog.psg.service.common.CredentialsMessage credentials = 1;
+  string batchId = 2;
+}
+
+message AirDropStatusResponse {
+  enum Status {
+    PENDING = 0;
+    RUNNING = 1;
+    FINISHED = 2;
+  }
+  oneof result {
+    AppError problem = 1;
+    Status status = 2;
+    AirDropResults airDropResults = 3;
+  }
+}
+
+message AirDropResults {
+  repeated AirDrop successful = 1;
+  repeated AirDrop failed = 2;
+}
+
+message AirDrop {
+  string address = 1;
+  string policyId = 2;
+  string assetName = 3;
+  uint64 amountToAirDrop = 4;
+  string result = 5;
+}
+
