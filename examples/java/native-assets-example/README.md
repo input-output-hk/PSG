@@ -54,35 +54,55 @@ $ java -jar target/native-assets-0.0.1-SNAPSHOT.jar
 
 ### Multisig Native Asset service example
 - Create Policy with `policyName` and `public key`:
-- ```$ curl -X POST "http://localhost:8181/policies/{name}/vkey/{vkey}"```
+- ```$ curl -X POST "http://localhost:8181/multisig/policies/{name}/vkey/{vkey}"```
 - Create Policy with `policyName` and `secret key`:
-- ```$ curl -X POST "http://localhost:8181/policies/{name}/skey/{sKey}"```
+- ```$ curl -X POST "http://localhost:8181/multisig/policies/{name}/skey/{sKey}"```
 - Get Policy with `policyId`:
-- ```$ curl -X GET "http://localhost:8181/policies/id/{policyId}"```
+- ```$ curl -X GET "http://localhost:8181/multisig/policies/id/{policyId}"```
 - Get Policy with `policyName`:
-- ```$ curl -X GET "http://localhost:8181/policies/name/{policyName}"```
+- ```$ curl -X GET "http://localhost:8181/multisig/policies/name/{policyName}"```
 - Get All Policies:
-- ```$ curl -X GET "http://localhost:8181/policies"```
+- ```$ curl -X GET "http://localhost:8181/multisig/policies"```
 - Create Mint Transaction for NFT  with json containing  `assetName` and `policyId`, addresses `paymentAddress` and `mintTargetAddress`
-- ```$ curl -X POST "http://localhost:8181/mint/nft"  -H "Content-Type: application/json"  -d ' {"name": "${AssetName}","policyId": "${policyId}", "paymentAddress": "${paymentAddress}", "mintTargetAddress": "${mintTargetAddress}"}'```
+- ```$ curl -X POST "http://localhost:8181/multisig/mint/nft"  -H "Content-Type: application/json"  -d ' {"name": "${AssetName}","policyId": "${policyId}", "paymentAddress": "${paymentAddress}", "mintTargetAddress": "${mintTargetAddress}"}'```
 - Create Mint Transaction for Asset with json containing `assetName` and `policyId`, addresses `paymentAddress` and `mintTargetAddress` and specified mint `amount`
-- ```$ curl -X POST "http://localhost:8181/mint"  -H "Content-Type: application/json"  -d ' {"name": "${AssetName}","policyId": "${policyId}", "paymentAddress": "${paymentAddress}", "mintTargetAddress": "${mintTargetAddress}", "amount": 10}'```
+- ```$ curl -X POST "http://localhost:8181/multisig/mint"  -H "Content-Type: application/json"  -d ' {"name": "${AssetName}","policyId": "${policyId}", "paymentAddress": "${paymentAddress}", "mintTargetAddress": "${mintTargetAddress}", "amount": 10}'```
 - Create Burn Transaction for Asset  with json containing `assetName` and `policyId`, address `targetAddress` and specified burn `amount`
-- ```$ curl -X POST "http://localhost:8181/burn"  -H "Content-Type: application/json"  -d ' {"name": "${AssetName}","policyId": "${policyId}", "targetAddress": "${targetAddress}", "amount": 10}'```
+- ```$ curl -X POST "http://localhost:8181/multisig/burn"  -H "Content-Type: application/json"  -d ' {"name": "${AssetName}","policyId": "${policyId}", "targetAddress": "${targetAddress}", "amount": 10}'```
 - Create Transfer Transaction for Asset with json containing `assetName` and `policyId`, addresses `fromAddress` and `targetAddress` and specified transfer `amount`
-- ```$ curl -X POST "http://localhost:8181/transfer"  -H "Content-Type: application/json"  -d ' {"name": "${AssetName}","policyId": "${policyId}",  "fromAddress": "${fromAddress}", "targetAddress": "${targetAddress}", "amount": 10}'```
+- ```$ curl -X POST "http://localhost:8181/multisig/transfer"  -H "Content-Type: application/json"  -d ' {"name": "${AssetName}","policyId": "${policyId}",  "fromAddress": "${fromAddress}", "targetAddress": "${targetAddress}", "amount": 10}'```
 - Add Witness with private key `sKey` for transaction defined by `txId`
-- ```$ curl -X POST "http://localhost:8181/witnesses/{txId/{sKey}"```
+- ```$ curl -X POST "http://localhost:8181/multisig/witnesses/{txId/{sKey}"```
 - Add Witness with public key `vKey` and signature `sig` for transaction defined by`txId`
-- ```$ curl -X POST "http://localhost:8181/witnesses/{txId/{vKey}/{sig}"```
+- ```$ curl -X POST "http://localhost:8181/multisig/witnesses/{txId/{vKey}/{sig}"```
 - List all Witnesses for transaction `txId`
-- ```$ curl -X GET "http://localhost:8181/witnesses/{txId}"```
+- ```$ curl -X GET "http://localhost:8181/multisig/witnesses/{txId}"```
 - List all Transactions
-- ```$ curl -X GET "http://localhost:8181/txs"```
+- ```$ curl -X GET "http://localhost:8181/multisig/txs"```
 - Get the Transaction with `txId`
-- ```$ curl -X GET "http://localhost:8181/txs/txId/{txid}"``` 
+- ```$ curl -X GET "http://localhost:8181/multisig/txs/txId/{txid}"``` 
 - Get the Transactions related to policy `policyId`
-- ```$ curl -X GET "http://localhost:8181/txs/txId/{policyId}"```
+- ```$ curl -X GET "http://localhost:8181/multisig/txs/txId/{policyId}"```
 - Submit the Transactions identified with `txId`
-- ```$ curl -X POST "http://localhost:8181/txs/{txId}/submit"```
+- ```$ curl -X POST "http://localhost:8181/multisig/txs/{txId}/submit"```
+
+##Helper api
+- Generate key pair `public-key` and `secret-key`:
+- ```$ curl -X POST "http://localhost:8181/keys"``
+- Generate Cardano address from public key `{vKey}`:
+- ```$ curl -X POST "http://localhost:8181/addresses/{vKey}"```
+- Derive public key from `{sKey}`:
+- ```$ curl -X POST "http://localhost:8181/vkey/{sKey}"```
+- Get hex format of `{vKey}`:
+- ```$ curl -X GET "http://localhost:8181/vkey/hex" -H "Content-Type: application/json"  -d '{
+    "type": "PaymentVerificationKeyShelley_ed25519",
+    "description": "Payment Verification Key",
+    "cborHex": "5820b96a7ed0e3e8c91b734d80dbe9fe8b05044cd114b2345236f2337224e3e6b83f"
+  }'```
+- Get hex format of `{sKey}`:
+- ```$ curl -X GET "http://localhost:8181/skey/hex" -H "Content-Type: application/json"  -d '{
+    "type": "PaymentVerificationKeyShelley_ed25519",
+    "description": "Payment Signing Key",
+    "cborHex": "..."
+}'```
 
