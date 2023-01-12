@@ -1,8 +1,6 @@
 package iog.psg.assets.controller;
 
-import iog.psg.assets.model.NativeMintDetails;
-import iog.psg.assets.model.NativeAsset;
-import iog.psg.assets.model.NativePolicy;
+import iog.psg.assets.model.*;
 import iog.psg.assets.service.NativeAssetsService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,19 +91,32 @@ public class NativeAssetsController {
         return nativeAssetsService.mintNativeAsset(nativeMintDetails.getName(), nativeMintDetails.getPolicyId(), nativeMintDetails);
     }
 
-//    @PostMapping("/mint")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public CompletableFuture<String> minta(
-//            @RequestBody MintDetails mintDetails) {
-//        return nativeAssetsService.mintNativeAssetWithArbitraryMetadata(mintDetails.getName(), mintDetails.getPolicyId(), mintDetails.getAmount(), mintDetails.getDepth());
-//    }
-//
-//    @PostMapping("/mint")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public CompletableFuture<String> burn(
-//            @RequestBody MintDetails mintDetails) {
-//        return nativeAssetsService.burnNativeAsset(mintDetails.getName(), mintDetails.getPolicyId(), mintDetails.getAmount(), mintDetails.getDepth());
-//    }
+    @PostMapping("/burn")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CompletableFuture<String> burn(
+            @RequestBody NativeBurnDetails nativeBurnDetails) {
+        return nativeAssetsService.burnNativeAsset(
+                nativeBurnDetails.getName(),
+                nativeBurnDetails.getPolicyId(),
+                nativeBurnDetails.getAmount(),
+                nativeBurnDetails.getDepth()
+        );
+
+    }
+
+    @PostMapping("/transfer")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CompletableFuture<String> transfer(
+            @RequestBody NativeTransferDetails trasnferDetails) {
+        return nativeAssetsService.transferNativeAsset(
+                trasnferDetails.getName(),
+                trasnferDetails.getPolicyId(),
+                trasnferDetails.getToAddress(),
+                trasnferDetails.getAmount(),
+                trasnferDetails.getDepth()
+        );
+
+    }
 
 
 }

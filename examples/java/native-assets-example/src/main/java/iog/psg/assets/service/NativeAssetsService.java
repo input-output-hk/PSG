@@ -186,6 +186,7 @@ public class NativeAssetsService {
                 .toCompletableFuture();
     }
 
+    //dummy implementation which aggregates
     private <V> StreamObserver<V> streamObserver(CompletableFuture<String> completableFuture) {
         return new StreamObserver<V>() {
             List<String> buffer = new ArrayList();
