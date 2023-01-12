@@ -125,22 +125,29 @@ public class MultisigNativeAssetsController {
                 .toCompletableFuture();
     }
 
-    @PostMapping("/burn/{txId}/{sKey}")
+    @PostMapping("/witnesses/{txId}/{vKey}/{sig}")
     @ResponseStatus(HttpStatus.CREATED)
-    public CompletableFuture<String> addWitness(
-            @RequestParam String txId,
-            @RequestParam String sKey) throws CborSerializationException {
+    public CompletableFuture<String> addWitnessWithSecretKey(
+            @PathVariable String txId,
+            @PathVariable String vKey,
+            @PathVariable String sig)
+            throws CborSerializationException {
+        return multisigNativeAssetService.addWitnessWithPublicKey(txId, vKey, sig)
+                .toCompletableFuture();
+    }
+
+    @PostMapping("/witnesses/{txId}/{sKey}")
+    public CompletionStage<String> addWitnessPubKeyKey(
+            @PathVariable String txId,
+            @PathVariable String sKey) throws CborSerializationException {
         return multisigNativeAssetService.addWitnessWithSecretKey(txId, sKey)
                 .toCompletableFuture();
     }
 
-    @PostMapping("/burn/{txId}/{vKey}/{sig}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public CompletableFuture<String> addWitness(
-            @RequestParam String txId,
-            @RequestParam String vKey,
-            @RequestParam String sig) throws CborSerializationException {
-        return multisigNativeAssetService.addWitnessWithPublicKey(txId, vKey, sig)
+
+    @GetMapping("/witnesses/{txId}")
+    public CompletionStage<List<String>> witnesses(@PathVariable String txId) {
+        return multisigNativeAssetService.listWitnesses(txId)
                 .toCompletableFuture();
     }
 
@@ -154,44 +161,21 @@ public class MultisigNativeAssetsController {
     @GetMapping("/txs/txId/{txId}")
     @ResponseStatus(HttpStatus.CREATED)
     public CompletableFuture<Long> getTx(
-            @RequestParam String txId) throws CborSerializationException {
+            @PathVariable String txId) throws CborSerializationException {
         return multisigNativeAssetService.getTx(txId)
                 .toCompletableFuture();
     }
 
     @GetMapping("/txs/txId/{policyId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public CompletableFuture<List<String>> getTxByPolicyId(@RequestParam String policyId) {
+    public CompletableFuture<List<String>> getTxByPolicyId(@PathVariable String policyId) {
         return multisigNativeAssetService.listTxsByPolicyId(policyId)
                 .toCompletableFuture();
     }
 
-    @PostMapping("/witnesses/{txId}/{vKey}/{sig}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public CompletableFuture<String> addWitnessWithSecretKey(
-            @RequestParam String txId,
-            @RequestParam String vKey,
-            @RequestParam String sig)
-            throws CborSerializationException {
-        return multisigNativeAssetService.addWitnessWithPublicKey(txId, vKey, sig)
-                .toCompletableFuture();
-    }
 
-    @PostMapping("/witnesses/{txId}/{sKey}")
-    public CompletionStage<String> addWitnessPubKeyKey(
-            @RequestParam String txId,
-            @RequestParam String sKey) throws CborSerializationException {
-        return multisigNativeAssetService.addWitnessWithSecretKey(txId, sKey)
-                .toCompletableFuture();
-    }
 
-    @GetMapping("/witnesses/{txId}")
-    public CompletionStage<List<String>> wtnesses(@RequestParam String txId) {
-        return multisigNativeAssetService.listWitnesses(txId)
-                .toCompletableFuture();
-    }
-
-    @PostMapping("/tx/{txId}/submit")
+    @PostMapping("/txs/{txId}/submit")
     public CompletionStage<String> send(@PathVariable String txId,
                                         @RequestParam Optional<Integer> depth) {
         return multisigNativeAssetService.sendTransaction(txId, depth.orElse(4))

@@ -12,6 +12,5 @@ public class MultisigTransferDetails {
     private String fromAddress;
     private String toAddress;
     private Long amount;
-    private Integer depth;
 
 }

@@ -13,7 +13,6 @@ public class MultisigMintDetails {
     private String name;
     private String policyId;
     private Long amount;
-    private Integer depth;
     private String paymentAddress;
     private String mintTargetAddress;
 
