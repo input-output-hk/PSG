@@ -74,4 +74,4 @@ List all metadata transactions between the dates given.
 **Note**: if a transaction has no metadata, it will not be listed by this call.
 
 **Note**: on the very rare occasions where the internal service configuration drastically changes transactions associated with a clientId may not be returned. 
-Client applications that have a critical long term dependency on remembering the ids of the transactions they posted are advised to make an independent record of the transaction id.   
+Client applications that have a critical long term dependency on remembering the ids of the transactions they posted are advised to make an independent record of the transaction id.

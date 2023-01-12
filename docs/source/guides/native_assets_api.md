@@ -4,10 +4,10 @@ This document describes using the service as an API. Working knowledge of gRpc i
 
 ## Service API
 
-This is a partial listing of the NativeAssetsService (v0.3.8)
+This is a partial listing of the NativeAssetsService (v0.3.19)
 ```
 service NativeAssetsService {
-rpc importPolicy(ImportPolicyRequest) returns (ImportPolicyResponse);
+  rpc importPolicy(ImportPolicyRequest) returns (ImportPolicyResponse);
   rpc createPolicy(CreatePolicyRequest) returns (CreatePolicyResponse);
   rpc getPolicy(GetPolicyRequest) returns (GetPolicyResponse);
   rpc listPolicies(ListPoliciesRequest) returns (ListPoliciesResponse);
@@ -35,6 +35,7 @@ message CreatePolicyRequest {
   TimeBounds timeBounds = 2;
   iog.psg.service.common.CredentialsMessage credentials = 3;
 }
+
 
 message CreatePolicyResponse {
   oneof result {
