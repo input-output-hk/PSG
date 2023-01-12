@@ -6,8 +6,6 @@ import com.bloxbean.cardano.client.crypto.Keys;
 import com.bloxbean.cardano.client.exception.CborSerializationException;
 import com.google.protobuf.Struct;
 import com.google.protobuf.Value;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import io.grpc.stub.StreamObserver;
 import iog.psg.client.nativeassets.NativeAssetsApi;
 import iog.psg.client.nativeassets.NativeAssetsBuilder;
@@ -47,7 +45,7 @@ public class Scenarios {
 
     }
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException, CborSerializationException {
+    public static void scenario1()  throws ExecutionException, InterruptedException, CborSerializationException  {
         String apiKey = ""; // apiKey
         String clientId = ""; // clientId
         // Create the Api
@@ -93,7 +91,7 @@ public class Scenarios {
                 .build();
         //Mint `100` tokens of the native asset defined with `nativeAssetId`
         CompletableFuture<NativeAssetTransaction> mintResult = new CompletableFuture<>();
-        api.mintAssetWithArbitraryMetadata(nativeAssetId, 100L, null, 4, lastResult(mintResult, r -> r.getAssetTx()));
+        api.mintAssetWithArbitraryMetadata(nativeAssetId, 100L, struct, 4, lastResult(mintResult, r -> r.getAssetTx()));
 
         //Burn `11` tokens of the native asset defined with `nativeAssetId`
         CompletableFuture<NativeAssetTransaction> burnResult = new CompletableFuture<>();
@@ -102,6 +100,12 @@ public class Scenarios {
         //Transfer `13` tokens of the native asset defined with `nativeAssetId` to `targetTransferAddress`
         CompletableFuture<NativeAssetTransaction> transferResult = new CompletableFuture<>();
         api.transferAsset(nativeAssetId, targetTransferAddress.getAddress(), 13L, depth, lastResult(transferResult, r -> r.getAssetTx()));
+    }
+
+
+
+    public static void main(String[] args) throws ExecutionException, CborSerializationException, InterruptedException {
+       scenario1();
 
     }
 }
