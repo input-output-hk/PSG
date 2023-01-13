@@ -41,9 +41,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>iog.psg</groupId>
+			<groupId>solutions.iog</groupId>
 			<artifactId>native-assets-client_2.13</artifactId>
-			<version>0.3.17</version>
+			<version>0.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
