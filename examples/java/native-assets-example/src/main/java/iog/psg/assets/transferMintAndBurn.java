@@ -45,7 +45,7 @@ public class Scenarios {
 
     }
 
-    public static void scenario1()  throws ExecutionException, InterruptedException, CborSerializationException  {
+    public static void transferMintBurn()  throws ExecutionException, InterruptedException, CborSerializationException  {
         String apiKey = ""; // apiKey
         String clientId = ""; // clientId
         // Create the Api
@@ -105,7 +105,7 @@ public class Scenarios {
 
 
     public static void main(String[] args) throws ExecutionException, CborSerializationException, InterruptedException {
-       scenario1();
+       transferMintBurn();
 
     }
 }
