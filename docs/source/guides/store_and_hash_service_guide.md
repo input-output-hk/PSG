@@ -29,11 +29,18 @@ service StoreAndHashService {
     rpc StoreAndHashIpfs (stream StoreAndHashIpfsRequest) returns (stream StoreAndHashResponse);
 }
 
-message StoreAndHashRequest {
+message StoreAndHashResponse {
     oneof options {
-        Chunk chunk = 1;
-        UploadDetails details = 2;
+        Hash hash = 1;
+        string url = 2;
+        AppError problem = 3;
     }
+}
+
+message Hash {
+   string hashType = 1;
+   bytes hashBytes = 2;
+   string hashBase64 = 3;
 }
 
 message Chunk {
@@ -51,6 +58,13 @@ message AwsCredentials {
    string keySecret = 2;
    string bucket = 3;
    string region = 4;
+}
+
+message StoreAndHashRequest {
+    oneof options {
+        Chunk chunk = 1;
+        UploadDetails details = 2;
+    }
 }
 
 message StoreAndHashIpfsRequest {

@@ -53,7 +53,30 @@ If you have 3 credits that expire on May 1, after depositing 10 ADA, you will ha
 
 **Price List:**
 
+Metadata:
+
 - SubmitMetadata: 10 credits
 - ListTransactions: 1 credit
+
+Store and hash:
+
 - AuthenticatedEmail: 15 credits
 - HashAndStore: 1 credit
+
+Native assets:
+
+- createPolicy: 5 credits
+- deletePolicy: 0 credits
+- getPolicy: 0 credits
+- getPolicies: 0 credits
+- createAsset: 5 credits
+- deleteAsset: 0 credits
+- listAsset: 0 credits
+- listAssets: 0 credits
+- mint: 25 credits
+- fund 1 ADA: 25 credits
+- transfer: 25 credits
+- burn: 25 credits
+- importPolicy: 0 credits
+- airdrop: 0 credits
+- checkAirdropStatus: 0 credits

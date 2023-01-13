@@ -1,7 +1,7 @@
-# Client SDK API - How to
+# Metadata Service - JAVA SDK
 
 ## maven dependency
-* Replace `${latest.version}` with latest version from maven central (https://search.maven.org/search?q=a:metadata-client_2.13) 
+* Replace `${latest.version}` with latest version from maven central (https://central.sonatype.dev/artifact/solutions.iog/metadata-client_2.13/0.3.1) 
 ```xml
 <dependency>
      <groupId>solutions.iog</groupId>
@@ -11,7 +11,9 @@
 ```
 ### Create the api
 ```java
-    MetadataAsync metadataApi = new MetadataAsync("API_TOKEN", "CLIENT_ID", "localhost", 2000);
+    Metadata client = MetadataBuilder
+        .create("API_TOKNE", "CLIENT_ID")
+        .build();
 ```
 
 ### Submit the Metadata to Blockchain
