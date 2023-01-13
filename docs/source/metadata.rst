@@ -21,6 +21,7 @@ This section describes the service API and how to use it.
    :titlesonly:
 
    Metadata Service - API <guides/metadata_service_guide.md>
+   Metadata Service SDK HOW TO <guides/metadata_service_sdk.md>
    Metadata Service - Configuration <guides/metadata_service_server_guide.md>
 
 .. raw:: html
