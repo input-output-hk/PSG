@@ -11,8 +11,8 @@ This section describes the service API and how to use it.
    :maxdepth: 2
    :titlesonly:
 
-   StoreAndHash Service - API <guides/store_and_hash_service_guide.md>
-   StoreAndHash Service SDK HOW TO <guides/store_and_hash_service_sdk.md>
+   StoreAndHash Service - gRPC API <guides/store_and_hash_service_guide.md>
+   StoreAndHash Service - JAVA SDK <guides/store_and_hash_service_sdk.md>
    StoreAndHash Service - Configuration <guides/store_and_hash_service_server_guide.md>
    How to configure AWS S3 User <guides/create_minimal_s3_user.md>
 
