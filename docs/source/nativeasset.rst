@@ -26,15 +26,14 @@ Additionally, you can get an initial overview of the API by checking `Native Ass
 
  **Non-Custodial Native Assets(Multisig Native Assets)  - Supported operations:**
   - Create, get and list policies
-  - Import existing policy
   - Mint (native asset)
   - Transfer (native asset)
   - Burn (native asset)
-  - Sign the Transaction
-  - Sent the Transaction
+  - Add signature/witness to the Transaction
+  - Send the Transaction
   - List the Transactions
 
- *helpers*
+ *Client side helpers*
   - Generation of public-key
   - Generation of the Address
   - Generation of key pair (public-key,private key)

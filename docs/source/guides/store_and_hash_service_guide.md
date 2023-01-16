@@ -93,7 +93,7 @@ The **StoreAndHashHttp** method expects a stream of requests from the client: **
 
 - **Path**: The path within the bucket that the file will be stored at will form part of the download URL.
 
-- **CredentialsMessage**: These are the clients secret key and identifiers so that they be validated and their credits debited
+- **CredentialsMessage**: These are the clients secret key and identifiers so that they be validated and their credits debited.  [new_user_guide](./new_user_guide.md)
 
 - **AwsCredentials**: The AWS credentials identify and authorize the service to upload to a particular aws s3 bucket.
 
@@ -132,7 +132,7 @@ The StoreAndHashIpfs method expects a stream of requests from the client: **Ipfs
     }
   ```
 
-- **CredentialsMessage**: These are the clients secret key and identifiers so that they be validated and their credits debited
+- **CredentialsMessage**: These are the clients secret key and identifiers so that they be validated and their credits debited.  [new_user_guide](./new_user_guide.md)
 
 ***Second***, each following call should to contain a chunk of the bytes read from the file.
 

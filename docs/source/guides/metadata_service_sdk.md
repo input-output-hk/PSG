@@ -11,8 +11,9 @@
 ```
 ### Create the api
 ```java
+    // Creates client that connects to MAINNET by default. 
     Metadata client = MetadataBuilder
-        .create("API_TOKNE", "CLIENT_ID")
+        .create("API_TOKEN", "CLIENT_ID")
         .build();
 ```
 

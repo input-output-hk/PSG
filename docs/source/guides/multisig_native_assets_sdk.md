@@ -18,6 +18,7 @@
 * By default, client will connect to psg.iog.services, which is operating on Cardano mainnet. There are additional methods on the builder that allows you to specify `host` to connect to different environments (like one operating on preprod Cardano network).
 
 ```java
+ // Creates client that connects to MAINNET by default. 
 public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
         return NativeAssetsBuilder
         .create(apiKey, clientId)
