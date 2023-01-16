@@ -6,9 +6,12 @@ import iog.psg.service.metadata.TransactionMetadataResponse;
 
 public class GetMetadata {
     public static void main(String[] args) throws InterruptedException {
+        String apiKey = ""; // apiKey
+        String clientId = ""; // clientId
+
         //client setup
         var client = MetadataBuilder
-                .create("key", "clientId")
+                .create(apiKey, clientId)
                 .build();
 
         //consuming results

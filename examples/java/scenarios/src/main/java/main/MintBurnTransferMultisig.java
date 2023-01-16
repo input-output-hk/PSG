@@ -9,8 +9,6 @@ import com.bloxbean.cardano.client.util.HexUtil;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Struct;
 import com.google.protobuf.util.JsonFormat;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import io.grpc.stub.StreamObserver;
 import iog.psg.client.nativeassets.NativeAssetsBuilder;
 import iog.psg.client.nativeassets.multisig.v1.NativeAssetsMultisigApi;
@@ -26,12 +24,16 @@ import java.util.concurrent.ExecutionException;
 
 public class MintBurnTransferMultisig {
     public static void main(String[] args) throws CborSerializationException, ExecutionException, InterruptedException, InvalidProtocolBufferException {
-        Config config = ConfigFactory.defaultApplication()
-                .getConfig("grpc.client")
-                .resolve();
-        NativeAssetsMultisigApi client = NativeAssetsBuilder
-                .create(config)
-                .buildMultisig();
+        String apiKey = ""; // apiKey
+        String clientId = ""; // clientId
+
+        //cardano address that will get the tokens
+        String address = "";
+
+        //private key in hex format
+        String privateKey = "";
+
+        var client = NativeAssetsBuilder.create(apiKey, clientId).buildMultisig();
 
         // You can't have 2 policies with the same name
         String policyName = "TestPolicy" + new Random().nextInt();
@@ -39,41 +41,32 @@ public class MintBurnTransferMultisig {
         Keys policyKeys2 = client.generateKeys();
         String assetName = "TestAsset";
 
-        Keys paymentKeys = createPaymentKeys(config, client);
+        //create keypair from your private key
+        SecretKey paymentSKey = SecretKey.create(HexUtil.decodeHexString(privateKey));
+        VerificationKey paymentVKey = client.generateVerificationKey(paymentSKey);
+        Keys paymentKeys = new Keys(paymentSKey, paymentVKey);
+
+        //generate address on Cardano blockchain associated with your private key
         String paymentAddress = client.generateAddress(paymentKeys.getVkey(), Networks.preprod()).getAddress();
 
+        //create policy that requires 2 signatures for mint / burn
         String policyId = createPolicy(client, policyName, policyKeys1, policyKeys2);
 
-        mint(client, policyKeys1, policyKeys2, assetName, paymentKeys, paymentAddress, policyId, 5);
+        CompletionStage<UnsignedTxResponse> mintTxFut = createMintTx(paymentAddress, policyId, assetName, client, 5L);
+        String mintTxId = getTxId(mintTxFut);
+        signAndSendTx(mintTxId, List.of(policyKeys1, policyKeys2, paymentKeys), client).toCompletableFuture().get();
 
-        burn(client, policyKeys1, policyKeys2, assetName, paymentKeys, paymentAddress, policyId, 2);
+        //burn some tokens
+        CompletionStage<UnsignedTxResponse> burnTxFut = client.createBurnTransaction(assetName, policyId, paymentAddress, 2L);
+        String burnTxId = getTxId(burnTxFut);
+        signAndSendTx(burnTxId, List.of(policyKeys1, policyKeys2, paymentKeys), client).toCompletableFuture().get();
 
-        transfer(config, client, assetName, paymentKeys, paymentAddress, policyId, 2);
-    }
-
-    private static Keys createPaymentKeys(Config config, NativeAssetsMultisigApi client) throws CborSerializationException {
-        SecretKey paymentSKey = SecretKey.create(HexUtil.decodeHexString(config.getString("sKeyHex")));
-        VerificationKey paymentVKey = client.generateVerificationKey(paymentSKey);
-        return new Keys(paymentSKey, paymentVKey);
-    }
-
-    private static SendTxResponse transfer(Config config, NativeAssetsMultisigApi client, String assetName, Keys paymentKeys, String paymentAddress, String policyId, long amount) throws ExecutionException, InterruptedException {
-        CompletionStage<UnsignedTxResponse> transferTxFut = client.createTransferTransaction(policyId, assetName, paymentAddress, config.getString("transferAddress"), amount);
+        //transfer some tokens
+        CompletionStage<UnsignedTxResponse> transferTxFut = client.createTransferTransaction(policyId, assetName, paymentAddress, address, 2L);
         String transferTxId = getTxId(transferTxFut);
         // Notice that you don't need to supply policy keys signatures for transfer transactions
-        return signAndSendTx(transferTxId, List.of(paymentKeys), client).toCompletableFuture().get();
-    }
-
-    private static SendTxResponse burn(NativeAssetsMultisigApi client, Keys policyKeys1, Keys policyKeys2, String assetName, Keys paymentKeys, String paymentAddress, String policyId, long amount) throws ExecutionException, InterruptedException {
-        CompletionStage<UnsignedTxResponse> burnTxFut = client.createBurnTransaction(assetName, policyId, paymentAddress, amount);
-        String burnTxId = getTxId(burnTxFut);
-        return signAndSendTx(burnTxId, List.of(policyKeys1, policyKeys2, paymentKeys), client).toCompletableFuture().get();
-    }
-
-    private static SendTxResponse mint(NativeAssetsMultisigApi client, Keys policyKeys1, Keys policyKeys2, String assetName, Keys paymentKeys, String paymentAddress, String policyId, long amount) throws InvalidProtocolBufferException, ExecutionException, InterruptedException {
-        CompletionStage<UnsignedTxResponse> mintTxFut = createMintTx(paymentAddress, policyId, assetName, client, amount);
-        String mintTxId = getTxId(mintTxFut);
-        return signAndSendTx(mintTxId, List.of(policyKeys1, policyKeys2, paymentKeys), client).toCompletableFuture().get();
+        // only the signature from the key that holds native asset
+        signAndSendTx(transferTxId, List.of(paymentKeys), client).toCompletableFuture().get();
     }
 
     private static String createPolicy(NativeAssetsMultisigApi client, String policyName, Keys policyKeys1, Keys policyKeys2) throws InterruptedException, ExecutionException {
@@ -107,23 +100,24 @@ public class MintBurnTransferMultisig {
         return sendTxResult;
     }
 
-    private static CompletionStage<EmptyResponse> addSignature(String txId, Keys keys, NativeAssetsMultisigApi
-            client) {
-        byte[] key1Sig = client.sign(txId, keys.getSkey());
-        return client.addWitness(txId, keys.getVkey(), key1Sig);
+    private static CompletionStage<EmptyResponse> addSignature(String txId, Keys keyPair, NativeAssetsMultisigApi client) {
+        byte[] signature = client.sign(txId, keyPair.getSkey());
+        return client.addSignature(txId, keyPair.getVkey(), signature);
     }
 
-    private static CompletionStage<UnsignedTxResponse> createMintTx(String paymentAddress, String policyId, String assetName, NativeAssetsMultisigApi client, long amount) throws InvalidProtocolBufferException {
+    private static CompletionStage<UnsignedTxResponse> createMintTx(String paymentAddress, String policyId, String assetName, NativeAssetsMultisigApi client, Long amount) throws InvalidProtocolBufferException {
         NativeAssetId nativeAssetId = NativeAssetId.newBuilder()
                 .setPolicyId(policyId)
                 .setName(assetName)
                 .build();
+
         NativeAsset nativeAsset = NativeAsset.newBuilder()
                 .setAmount(amount)
                 .setId(nativeAssetId)
                 .build();
+
         AddressedNativeAsset nativeAssetWithAddress = AddressedNativeAsset.newBuilder()
-                // minting to itself, but it can be any valid Cardano Address
+                // minting to address that you own, but it can be any valid Cardano Address
                 .setAddress(paymentAddress)
                 .setNativeAsset(nativeAsset)
                 .build();
@@ -137,6 +131,7 @@ public class MintBurnTransferMultisig {
         return client.createMintTransaction(nativeAssets);
     }
 
+    //this is optional metadata that you can add to your native asset
     private static Struct buildMetadata() throws InvalidProtocolBufferException {
         String randomJsonMetadata = """
                 {
@@ -161,6 +156,7 @@ public class MintBurnTransferMultisig {
         return structBuilder.build();
     }
 
+    //for consuming results
     private static StreamObserver<SendTxResponse> lastResult(CompletableFuture<SendTxResponse> result) {
         return new StreamObserver<>() {
             SendTxResponse last;

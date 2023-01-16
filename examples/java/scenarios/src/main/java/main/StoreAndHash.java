@@ -37,9 +37,12 @@ public class StoreAndHash {
         String awsRegion = "__";
         AwsConf awsConf = new AwsConf(awsKey, awsSecret, awsBucket, awsRegion);
 
+        String apiKey = ""; // apiKey
+        String clientId = ""; // clientId
+
         //client setup
         var storeAndHashApi = StoreAndHashBuilder
-                .create("key", "clientId")
+                .create(apiKey, clientId)
                 .build();
 
         //consuming results

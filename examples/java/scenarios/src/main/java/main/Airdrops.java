@@ -12,9 +12,12 @@ import java.util.stream.IntStream;
 
 public class Airdrops {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
+        String apiKey = ""; // apiKey
+        String clientId = ""; // clientId
+
         //client setup
         var client = NativeAssetsBuilder
-                .create("key", "clientId")
+                .create(apiKey, clientId)
                 .build();
 
         //if you do not have policy / asset, create them with this calls:

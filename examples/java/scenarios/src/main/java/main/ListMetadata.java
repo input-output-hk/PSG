@@ -10,9 +10,11 @@ import java.time.Instant;
 
 public class ListMetadata {
     public static void main(String[] args) throws InterruptedException {
+        String apiKey = ""; // apiKey
+        String clientId = ""; // clientId
         //client setup
         Metadata client = MetadataBuilder
-                .create("key", "clientId")
+                .create(apiKey, clientId)
                 .build();
 
         //consuming results
