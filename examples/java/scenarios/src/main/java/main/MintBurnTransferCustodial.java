@@ -49,10 +49,6 @@ public class MintBurnTransferCustodial {
         String clientId = ""; // clientId
         // Create the Api
         NativeAssetsApi api = NativeAssetsBuilder.create(apiKey, clientId).build();
-        NativeAssetsMultisigApi helper = NativeAssetsBuilder.create(apiKey, clientId).buildMultisig();
-
-        Keys keys = helper.generateKeys();
-        Address targetTransferAddress = helper.generateAddress(keys.getVkey(), Networks.mainnet());
 
         // create policy with name My Policy and
         TimeBounds timeBounds = TimeBounds
@@ -96,9 +92,10 @@ public class MintBurnTransferCustodial {
         CompletableFuture<NativeAssetTransaction> burnResult = new CompletableFuture<>();
         api.burnAsset(nativeAssetId, 11l, depth, lastResult(burnResult, r -> r.getAssetTx()));
 
+        String targetAddress = "addr_myaddress";
         //Transfer `13` tokens of the native asset defined with `nativeAssetId` to `targetTransferAddress`
         CompletableFuture<NativeAssetTransaction> transferResult = new CompletableFuture<>();
-        api.transferAsset(nativeAssetId, targetTransferAddress.getAddress(), 13L, depth, lastResult(transferResult, r -> r.getAssetTx()));
+        api.transferAsset(nativeAssetId, targetAddress, 13L, depth, lastResult(transferResult, r -> r.getAssetTx()));
     }
 
 }
