@@ -43,7 +43,7 @@ NativeAssetsApi api = NativeAssetsBuilder.create(token, clientId).build();
         // Create the policy with name `My Policy`
         return api.createPolicy("policyName", timeBounds)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getPolicy();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -59,7 +59,7 @@ NativeAssetsApi api = NativeAssetsBuilder.create(token, clientId).build();
         String policyId = "policyId";
         return api.getPolicy(policyId)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getPolicy();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -72,7 +72,7 @@ NativeAssetsApi api = NativeAssetsBuilder.create(token, clientId).build();
     public CompletionStage<List<Policy>> getPolicies() {
         return api.getPolices()
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getPoliciesList();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -87,7 +87,7 @@ NativeAssetsApi api = NativeAssetsBuilder.create(token, clientId).build();
         String policyId = "policyId";
         return api.deletePolicy(policyId)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return true;
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -113,7 +113,7 @@ NativeAssetsApi api = NativeAssetsBuilder.create(token, clientId).build();
 
         return api.createAsset(nativeAssetId)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getAsset();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -138,7 +138,7 @@ NativeAssetsApi api = NativeAssetsBuilder.create(token, clientId).build();
                 .build();
         return api.getAsset(nativeAssetId)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getAsset();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -152,7 +152,7 @@ NativeAssetsApi api = NativeAssetsBuilder.create(token, clientId).build();
     public CompletionStage<List<NativeAsset>> getAssets() {
         return api.listAssets()
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getAssetsList();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -176,7 +176,7 @@ NativeAssetsApi api = NativeAssetsBuilder.create(token, clientId).build();
                 .build();
         return api.deleteAsset(nativeAssetId)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return true;
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -359,7 +359,7 @@ NativeAssetsApi api = NativeAssetsBuilder.create(token, clientId).build();
 
         return api.sendAirDropBatch(struct, airDrops)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getBatchId();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());

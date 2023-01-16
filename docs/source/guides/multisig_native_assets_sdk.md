@@ -42,7 +42,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 
         return nativeAssetsMultisigApi.createPolicy(policyName, beforeSlot, afterSlot, Arrays.asList(pubKey))
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getPolicy();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -65,7 +65,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 
         return nativeAssetsMultisigApi.createPolicyUsingPrivateKeys(policyName, beforeSlot, afterSlot, Arrays.asList(secKey))
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getPolicy();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -80,7 +80,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
         String policyId = "policyId";
         return nativeAssetsMultisigApi.getPolicyById(policyId)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getPolicy();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -95,7 +95,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
         String policyByName = "PolicyByName";
         return nativeAssetsMultisigApi.getPolicyByName(policyByName)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getPolicy();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -108,7 +108,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
     public CompletionStage<List<Policy>> listPolices() {
         return nativeAssetsMultisigApi.listPolices()
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return JavaConverters.seqAsJavaList(response.policies());
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -138,7 +138,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 
         return nativeAssetsMultisigApi.createMintTransaction(policyId, paymentAddress, addressedNft)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getTx().tx();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -155,7 +155,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 * Replace `json` - in the form of Java Map. This json/map should correspond with **(https://developers.cardano.org/docs/transaction-metadata/)**
 ```java
 
-    public CompletionStage<String> createMintTransactionWithArbitraryMetadata() {
+    public CompletionStage<String> createMintTransaction() {
         String assetName = "assetName";
         String policyId = "policyId";
         Long amount = 1000l;
@@ -190,9 +190,9 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
                 .withNativeAssets(JavaConverters.asScala(Arrays.asList(addressedNativeAsset)).toSeq());
 
 
-        return nativeAssetsMultisigApi.createMintTransactionWithArbitraryMetadata(assets)
+        return nativeAssetsMultisigApi.createMintTransaction(assets)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getTx().tx();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -216,7 +216,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 
         return nativeAssetsMultisigApi.createTransferTransaction(policyId, assetName, fromAddress, toAddress, amount)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getTx().tx();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -237,7 +237,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
         Long amount = 10l;
         return nativeAssetsMultisigApi.createBurnTransaction(policyId, assetName, targetAddress, amount)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getTx().tx();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -255,7 +255,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
         SecretKey privateKey = SecretKey.create(HexUtil.decodeHexString(secretKeyHex));
         return nativeAssetsMultisigApi.addWitness(txId, privateKey)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return "signature added";
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -276,7 +276,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 
         return nativeAssetsMultisigApi.addWitness(txId, publicKey, HexUtil.decodeHexString(signatureHex))
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return "signature added";
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -292,7 +292,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 
         return nativeAssetsMultisigApi.getTx(txId)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return response.getTx().confirmations();
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -306,7 +306,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 
         return nativeAssetsMultisigApi.listTxs()
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return JavaConverters.asJava(response.transactions()).stream().map(ur -> ur.txId()).collect(Collectors.toList());
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -322,7 +322,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 
         return nativeAssetsMultisigApi.listTxs(policyId)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return JavaConverters.asJava(response.transactions()).stream().map(ur -> ur.txId()).collect(Collectors.toList());
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
@@ -338,7 +338,7 @@ public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
 
         return nativeAssetsMultisigApi.listWitnesses(txId)
                 .thenApply(response -> {
-                    if (response.getProblem().getMsg().isEmpty())
+                    if (response.hasProblem())
                         return  JavaConverters.asJava(response.verKeyHashes());
                     else {
                         throw new RuntimeException(response.getProblem().getMsg());
