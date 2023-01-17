@@ -82,7 +82,6 @@ message Policy {
   string name = 1;
   string policyId = 2;
   string paymentAddress = 3;
-  uint64 paymentAddressAmount = 4;
 }
 
 message MintNativeAssetRequest {
