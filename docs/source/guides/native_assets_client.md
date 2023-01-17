@@ -1,4 +1,4 @@
-# Native Assets Client - User Guide
+# Native Assets CLI - User Guide
 
 This document describes usage of Native Assets Client.  
 

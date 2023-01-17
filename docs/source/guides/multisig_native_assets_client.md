@@ -1,4 +1,4 @@
-# Multisig Native Assets Client - User Guide
+# Multisig Native Assets CLI - User Guide
 
 This document describes usage of Multisig Native Assets Client.  
 
@@ -18,7 +18,7 @@ sudo chmod +x /bin/native-assets-client
 ```
 - Run client from the command line
 ```bash
-./bin/native-assets-client -COMMAND
+./bin/native-assets-client -multisig -COMMAND
 ```
 
 where COMMAND - one of the supported ones

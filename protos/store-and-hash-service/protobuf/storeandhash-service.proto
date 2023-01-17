@@ -5,13 +5,12 @@ package iog.psg.service.storeandhash;
 
 option java_multiple_files = true;
 option java_package = "iog.psg.service.storeandhash";
-option java_outer_classname = "StoreAndHashService";
+option java_outer_classname = "StoreAndHashServiceProto";
 
 import "errors.proto";
 import "common.proto";
 
 service StoreAndHashService {
-
     rpc StoreAndHashHttp (stream StoreAndHashRequest) returns (stream StoreAndHashResponse);
     rpc StoreAndHashIpfs (stream StoreAndHashIpfsRequest) returns (stream StoreAndHashResponse);
 }

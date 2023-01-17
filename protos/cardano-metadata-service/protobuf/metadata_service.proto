@@ -4,11 +4,11 @@ syntax = "proto3";
 package iog.psg.service.metadata;
 
 option java_multiple_files = true;
-option java_outer_classname = "MetadataService";
+option java_outer_classname = "MetadataServiceProto";
 option java_package = "iog.psg.service.metadata";
 
 import "google/protobuf/timestamp.proto";
-import "google/protobuf/wrappers.proto";
+import "google/protobuf/struct.proto";
 import "tx_status.proto";
 import "common.proto";
 import "errors.proto";
@@ -16,6 +16,7 @@ import "errors.proto";
 service MetadataService {
   rpc SubmitMetadata(SubmitMetadataRequest) returns (stream SubmitMetadataResponse);
   rpc ListMetadata(ListMetadataRequest) returns (stream ListMetadataResponse);
+  rpc TransactionMetadata(TransactionMetadataRequest) returns (stream TransactionMetadataResponse);
 }
 
 message SubmitMetadataRequest {
@@ -34,10 +35,22 @@ message SubmitMetadataResponse {
   }
 }
 
+message TransactionMetadataRequest {
+  string txHash = 1;
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+}
+
 message ListMetadataRequest {
   google.protobuf.Timestamp startAt = 1;
   google.protobuf.Timestamp endAt = 2;
   iog.psg.service.common.CredentialsMessage credentials = 3;
+}
+
+message TransactionMetadataResponse {
+  oneof result {
+    AppError problem = 1;
+    google.protobuf.Struct metadata = 2;
+  }
 }
 
 message ListMetadataResponse {

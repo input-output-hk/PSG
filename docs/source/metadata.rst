@@ -20,8 +20,8 @@ This section describes the service API and how to use it.
    :maxdepth: 2
    :titlesonly:
 
-   Metadata Service - API <guides/metadata_service_guide.md>
-   Metadata Service SDK HOW TO <guides/metadata_service_sdk.md>
+   Metadata Service - gRPC API <guides/metadata_service_guide.md>
+   Metadata Service - JAVA SDK <guides/metadata_service_sdk.md>
    Metadata Service - Configuration <guides/metadata_service_server_guide.md>
 
 .. raw:: html

@@ -1,0 +1,250 @@
+syntax = "proto3";
+
+package iog.psg.service.nativeassets.multisig.v1;
+
+option java_multiple_files = true;
+option java_outer_classname = "NativeAssetsMultisig";
+option java_package = "iog.psg.service.nativeassets.multisig.proto.v1";
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/empty.proto";
+
+import "common.proto";
+import "errors.proto";
+import "native_assets.proto";
+
+service NativeAssetsMultisigService {
+  rpc importPolicy(ImportPolicyRequest) returns (ImportPolicyResponse);
+  rpc createPolicy(CreatePolicyRequest) returns (CreatePolicyResponse);
+  rpc getPolicy(GetPolicyRequest) returns (GetPolicyResponse);
+  rpc listPolicies(ListPoliciesRequest) returns (ListPoliciesResponse);
+
+  rpc createMintTx(CreateMintTxRequest) returns (UnsignedTxResponse);
+  rpc createMintTxWithArbitraryMetadata(CreateMintTxWithArbitraryMetadataRequest) returns (UnsignedTxResponse);
+  rpc createTransferTx(CreateTransferTxRequest) returns (UnsignedTxResponse);
+  rpc createBurnTx(CreateBurnTxRequest) returns (UnsignedTxResponse);
+
+  rpc addWitness(AddWitnessRequest) returns (EmptyResponse);
+
+  rpc getTx(GetTxRequest) returns (GetTxResponse);
+  rpc listTxs(ListTxsRequest) returns  (ListTxsResponse);
+
+  rpc listWitnesses(ListWitnessesRequest) returns (ListWitnessesResponse);
+  // TODO is it fine that it returns empty response instead of stream (stream would be waiting for confirmation)? -
+  //  if we keep it like that we can add additional transaction status check method
+  rpc sendTx(SendTxRequest) returns (stream SendTxResponse);
+}
+
+message SendTxResponse {
+  message TxSubmitted {}
+
+  oneof result {
+    AppError problem = 1;
+    SendTx sendTx = 2;
+    TxSubmitted submitted = 3;
+  }
+}
+
+message SendTx {
+  NativeAsset asset = 1;
+  TxInfo txInfo = 2;
+}
+
+message GetPolicyRequest {
+  oneof request {
+    string name = 1;
+    string policyId = 2;
+  }
+  iog.psg.service.common.CredentialsMessage credentials = 3;
+}
+
+message GetPolicyResponse {
+  oneof result {
+    AppError problem = 1;
+    Policy policy = 2;
+  }
+}
+
+message ListPoliciesRequest {
+  iog.psg.service.common.CredentialsMessage credentials = 1;
+}
+
+message ListPoliciesResponse {
+  AppError problem = 1;
+  repeated Policy policies = 2;
+}
+
+message GetTxRequest {
+  string txId = 1;
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+}
+
+message GetTxResponse {
+  oneof result {
+    AppError problem = 1;
+    TxWithConfirmations tx = 2;
+  }
+}
+
+message SendTxRequest {
+  string txId = 1;
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+  int64 depth = 3;
+}
+
+message AddWitnessRequest {
+  reserved 2;
+  string txId = 1;
+  string witnessFileContent = 3;
+  iog.psg.service.common.CredentialsMessage credentials = 4;
+}
+
+message EmptyResponse {
+  oneof result {
+    AppError problem = 1;
+    google.protobuf.Empty empty = 2;
+  }
+}
+
+message CreatePolicyRequest {
+  string name = 1;
+  TimeBounds timeBounds = 2;
+  repeated string verificationKeys = 3;
+  iog.psg.service.common.CredentialsMessage credentials = 4;
+}
+
+message CreatePolicyResponse {
+  oneof result {
+    AppError problem = 1;
+    Policy policy = 2;
+  }
+}
+
+message Policy {
+  string name = 1;
+  string policyId = 2;
+}
+
+message AddressedNfts {
+  string policyId = 1;
+  // address which will pay for the transaction
+  string paymentAddress = 2;
+  repeated AddressedNft addressedNfts = 3;
+}
+
+message AddressedNft {
+  iog.psg.service.nativeassets.Nft nft = 1;
+  // address to which the asset is going to be minted/transferred
+  string address = 2;
+}
+
+message AddressedNativeAssets {
+  repeated AddressedNativeAsset nativeAssets = 1;
+  // arbitrary json acceptable as cardano blockchain metadata
+  google.protobuf.Struct metadata = 2;
+  // address which will pay for the transaction
+  string paymentAddress = 3;
+}
+
+message AddressedNativeAsset {
+  NativeAsset nativeAsset = 1;
+  // address to which the asset is going to be minted/transferred
+  string address = 2;
+}
+
+message CreateMintTxRequest {
+  AddressedNfts addressedNfts = 1;
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+}
+
+message CreateMintTxWithArbitraryMetadataRequest {
+  AddressedNativeAssets nativeAssets = 1;
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+}
+
+message ImportPolicyRequest {
+  string name = 1;
+  string policyAsString = 2;
+  iog.psg.service.common.CredentialsMessage credentials = 5;
+}
+
+message UnsignedTx {
+  // transaction hash which needs to be signed
+  string txId = 1;
+  // Transaction body in the CardanoCli format. It is not needed in the signing process, but without it you would be
+  // signing blindly
+  string tx = 2;
+}
+
+message TxWithConfirmations {
+  UnsignedTx tx = 1;
+  int64 confirmations = 2;
+}
+
+message UnsignedTxResponse {
+  oneof result {
+    AppError problem = 1;
+    UnsignedTx tx = 2;
+  }
+}
+
+message ListTxsRequest {
+  optional string policyId = 1;
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+}
+
+message ListTxsResponse {
+  AppError problem = 1;
+  repeated UnsignedTx transactions = 2;
+}
+
+message ListWitnessesRequest {
+  string txId = 1;
+  iog.psg.service.common.CredentialsMessage credentials = 2;
+}
+
+message ListWitnessesResponse {
+  AppError problem = 1;
+  repeated string verKeyHashes = 2;
+}
+
+message MintTxResponse {
+  oneof result {
+    AppError problem = 1;
+    UnsignedTx tx = 2;
+  }
+}
+
+message ImportPolicyResponse {
+  oneof result {
+    AppError problem = 1;
+    UnsignedTx tx = 2;
+  }
+}
+
+message CreateTransferTxRequest {
+  NativeAsset nativeAsset = 1;
+  string fromAddress = 2;
+  string toAddress = 3;
+  iog.psg.service.common.CredentialsMessage credentials = 4;
+}
+
+message CreateTransferTxResponse {
+  oneof result {
+    AppError problem = 1;
+    UnsignedTx tx = 2;
+  }
+}
+
+message CreateBurnTxRequest {
+  NativeAsset nativeAsset = 1;
+  string address = 2;
+  iog.psg.service.common.CredentialsMessage credentials = 3;
+}
+
+message BurnNativeAssetResponse {
+  oneof result {
+    AppError problem = 1;
+    UnsignedTx tx = 2;
+  }
+}
