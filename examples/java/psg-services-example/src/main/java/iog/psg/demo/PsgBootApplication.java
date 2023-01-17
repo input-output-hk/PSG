@@ -27,19 +27,12 @@ public class PsgBootApplication implements WebMvcConfigurer {
 
     @Bean
     public Metadata metadata() {
-//        ManagedChannel managedChannel = ManagedChannelBuilder.forAddress(host, port)
+//        ManagedChannel managedChannel  = ManagedChannelBuilder.forAddress(host, port)
 //                .usePlaintext()
 //                .build();
         return  MetadataBuilder.create(token, clientId)
-                .withHost(host)
-                .withPort(port)
 //                .withManagedChannel(managedChannel)
                 .build();
-//        return MetadataBuilder.create(token, clientId)
-//                .withHost(host)
-//                .withPort(port)
-//                .withCallOptions(CallOptions.DEFAULT)
-//                .build();
     }
     @Bean
     public StoreAndHash storeAndHash() {

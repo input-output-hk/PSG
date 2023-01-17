@@ -39,11 +39,11 @@ public class DataService {
         ResponseBodyEmitter emitter = new ResponseBodyEmitter();
         metadataService.listMetadata(startAt, endAt, Observer.observer(emitter, response ->
                 TransactionStatus.builder()
-                        .id(response.getTxStatus().txId())
-                        .state(response.getTxStatus().txState().toString())
+                        .id(response.getTxStatus().getTxId())
+                        .state(response.getTxStatus().getTxState().toString())
                         .metadata(response.getTxStatus().getMetadata().toString())
-                        .errorCode(response.getProblem().code())
-                        .errorMessage(response.getProblem().msg())
+                        .errorCode(response.getProblem().getCode())
+                        .errorMessage(response.getProblem().getMsg())
                         .build()
         ));
         return emitter;
@@ -53,11 +53,11 @@ public class DataService {
         ResponseBodyEmitter emitter = new ResponseBodyEmitter();
         metadataService.submitMetadata(" { \"123456789\": { \"string\": \"" + metadata + "\" } }", Observer.observer(emitter, response ->
                         TransactionStatus.builder()
-                                .id(response.getTxStatus().txId())
-                                .state(response.getTxStatus().txState().toString())
+                                .id(response.getTxStatus().getTxId())
+                                .state(response.getTxStatus().getTxState().toString())
                                 .metadata(response.getTxStatus().getMetadata().toString())
-                                .errorCode(response.getProblem().code())
-                                .errorMessage(response.getProblem().msg())
+                                .errorCode(response.getProblem().getCode())
+                                .errorMessage(response.getProblem().getMsg())
                                 .build()
 
 

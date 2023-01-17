@@ -8,19 +8,23 @@ import com.bloxbean.cardano.client.crypto.SecretKey;
 import com.bloxbean.cardano.client.crypto.VerificationKey;
 import com.bloxbean.cardano.client.exception.CborSerializationException;
 import com.bloxbean.cardano.client.util.HexUtil;
-import com.google.protobuf.struct.Struct;
-import com.google.protobuf.struct.Value;
+import com.google.protobuf.Struct;
+import com.google.protobuf.Value;
 import io.grpc.stub.StreamObserver;
+
 import iog.psg.client.nativeassets.multisig.v1.NativeAssetsMultisigApi;
-import iog.psg.service.nativeassets.multisig.proto.v1.native_assets_multisig_service.*;
-import iog.psg.service.nativeassets.native_assets.*;
+import iog.psg.service.nativeassets.NativeAsset;
+import iog.psg.service.nativeassets.NativeAssetId;
+import iog.psg.service.nativeassets.Nft;
+import iog.psg.service.nativeassets.TimeBounds;
+import iog.psg.service.nativeassets.multisig.proto.v1.AddressedNativeAsset;
+import iog.psg.service.nativeassets.multisig.proto.v1.AddressedNativeAssets;
+import iog.psg.service.nativeassets.multisig.proto.v1.AddressedNft;
+import iog.psg.service.nativeassets.multisig.proto.v1.Policy;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
-import scala.$less$colon$less$;
-import scala.collection.JavaConverters;
-import scala.jdk.CollectionConverters;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -46,39 +50,24 @@ public class MultisigNativeAssetService {
         TimeBounds timeBounds = createTimeBounds(beforeSlot, afterSlot);
         return nativeAssetsMultisigApi.createPolicy(policyName, timeBounds, Arrays.asList(pubKey))
                 .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
+                    if (response.getProblem().getMsg().isEmpty())
                         return response.getPolicy();
                     else {
-                        throw new RuntimeException(response.getProblem().msg());
+                        throw new RuntimeException(response.getProblem().getMsg());
                     }
                 });
     }
 
-    public CompletionStage<Policy> createPolicyWithSecKeys(String policyName,
-                                                           String hexSecKey,
-                                                           Optional<Integer> beforeSlot,
-                                                           Optional<Integer> afterSlot) throws CborSerializationException {
-        SecretKey secKey = SecretKey.create(HexUtil.decodeHexString(hexSecKey));
-        TimeBounds timeBounds = createTimeBounds(beforeSlot, afterSlot);
-        return nativeAssetsMultisigApi.createPolicyUsingPrivateKeys(policyName, timeBounds, Arrays.asList(secKey))
-                .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
-                        return response.getPolicy();
-                    else {
-                        throw new RuntimeException(response.getProblem().msg());
-                    }
-                });
-    }
 
 
     public CompletionStage<Policy> getPolicyById(String policyId) {
         return nativeAssetsMultisigApi.getPolicyById(policyId)
 
                 .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
+                    if (response.getProblem().getMsg().isEmpty())
                         return response.getPolicy();
                     else {
-                        throw new RuntimeException(response.getProblem().msg());
+                        throw new RuntimeException(response.getProblem().getMsg());
                     }
                 });
     }
@@ -88,10 +77,10 @@ public class MultisigNativeAssetService {
         return nativeAssetsMultisigApi.getPolicyByName(policyByName)
 
                 .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
+                    if (response.getProblem().getMsg().isEmpty())
                         return response.getPolicy();
                     else {
-                        throw new RuntimeException(response.getProblem().msg());
+                        throw new RuntimeException(response.getProblem().getMsg());
                     }
                 });
     }
@@ -100,31 +89,34 @@ public class MultisigNativeAssetService {
     public CompletionStage<List<Policy>> listPolices() {
         return nativeAssetsMultisigApi.listPolices()
                 .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
-                        return CollectionConverters.SeqHasAsJava(response.policies()).asJava();
+                    if (response.getProblem().getMsg().isEmpty())
+                        return response.getPoliciesList();
                     else {
-                        throw new RuntimeException(response.getProblem().msg());
+                        throw new RuntimeException(response.getProblem().getMsg());
                     }
                 });
     }
 
 
     public CompletionStage<String> createMintTransaction(String policyId, String assetName, String paymentAddress, String mintTargetAddress) {
-        Nft nft = Nft$.MODULE$.defaultInstance()
-                .withName(assetName)
-                .withAssetName(assetName);
+        Nft nft = Nft.newBuilder()
+                .setName(assetName)
+                .setAssetName(assetName)
+                .build();
 
-        AddressedNft addressedNft = AddressedNft$.MODULE$.defaultInstance()
-                .withNft(nft)
-                .withAddress(mintTargetAddress);
+        AddressedNft addressedNft = AddressedNft.newBuilder()
+                .setNft(nft)
+                .setAddress(mintTargetAddress)
+                .build();
+
 
         return nativeAssetsMultisigApi.createMintTransaction(policyId, paymentAddress, addressedNft)
 
                 .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
-                        return response.getTx().tx();
+                    if (response.getProblem().getMsg().isEmpty())
+                        return response.getTx().getTx();
                     else {
-                        throw new RuntimeException(response.getProblem().msg());
+                        throw new RuntimeException(response.getProblem().getMsg());
                     }
                 });
     }
@@ -136,40 +128,38 @@ public class MultisigNativeAssetService {
                                                                               Map<String, Value> metadata,
                                                                               Long amount) {
 
-        Struct struct = com.google.protobuf.struct.Struct.of(
-                CollectionConverters.MapHasAsScala(metadata).
-                        asScala()
-                        .toMap($less$colon$less$.MODULE$.refl())
-        );
+        Struct struct = com.google.protobuf.Struct.newBuilder()
+                .putAllFields(metadata)
+                .build();
 
-        NativeAssetId nativeAssetId = NativeAssetId$.MODULE$
-                .defaultInstance()
-                .withName(assetName)
-                .withPolicyId(policyId);
-        NativeAsset nativeAsset = NativeAsset$.MODULE$
-                .defaultInstance()
-                .withAmount(amount)
-                .withId(nativeAssetId);
+        NativeAssetId nativeAssetId = NativeAssetId.newBuilder()
+                .setName(assetName)
+                .setPolicyId(policyId)
+                .build();
+        NativeAsset nativeAsset = NativeAsset.newBuilder()
+                .setAmount(amount)
+                .setId(nativeAssetId)
+                .build();
 
-        AddressedNativeAsset addressedNativeAsset = AddressedNativeAsset$.MODULE$
-                .defaultInstance()
-                .withAddress(mintTargetAddress)
-                .withNativeAsset(nativeAsset);
+        AddressedNativeAsset addressedNativeAsset = AddressedNativeAsset.newBuilder()
+                .setAddress(mintTargetAddress)
+                .setNativeAsset(nativeAsset)
+                .build();
 
-        AddressedNativeAssets assets = AddressedNativeAssets$.MODULE$
-                .defaultInstance()
-                .withPaymentAddress(paymentAddress)
-                .withMetadata(struct)
-                .withNativeAssets(CollectionConverters.ListHasAsScala(Arrays.asList(addressedNativeAsset)).asScala().toSeq());
+        AddressedNativeAssets assets = AddressedNativeAssets.newBuilder()
+                .setPaymentAddress(paymentAddress)
+                .setMetadata(struct)
+                .addAllNativeAssets(Arrays.asList(addressedNativeAsset))
+                .build();
 
 
-        return nativeAssetsMultisigApi.createMintTransactionWithArbitraryMetadata(assets)
+        return nativeAssetsMultisigApi.createMintTransaction(assets)
 
                 .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
-                        return response.getTx().tx();
+                    if (response.getProblem().getMsg().isEmpty())
+                        return response.getTx().getTx();
                     else {
-                        throw new RuntimeException(response.getProblem().msg());
+                        throw new RuntimeException(response.getProblem().getMsg());
                     }
                 }).toCompletableFuture();
     }
@@ -178,10 +168,10 @@ public class MultisigNativeAssetService {
         return nativeAssetsMultisigApi.createTransferTransaction(policyId, assetName, fromAddress, toAddress, amount)
 
                 .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
-                        return response.getTx().tx();
+                    if (response.getProblem().getMsg().isEmpty())
+                        return response.getTx().getTx();
                     else {
-                        throw new RuntimeException(response.getProblem().msg());
+                        throw new RuntimeException(response.getProblem().getMsg());
                     }
                 });
     }
@@ -194,25 +184,10 @@ public class MultisigNativeAssetService {
         return nativeAssetsMultisigApi.createBurnTransaction(policyId, assetName, targetAddress, amount)
 
                 .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
-                        return response.getTx().tx();
+                    if (response.getProblem().getMsg().isEmpty())
+                        return response.getTx().getTx();
                     else {
-                        throw new RuntimeException(response.getProblem().msg());
-                    }
-                });
-    }
-
-
-    public CompletionStage<String> addWitnessWithSecretKey(String txId, String secretKeyHex) throws CborSerializationException {
-
-        SecretKey privateKey = SecretKey.create(HexUtil.decodeHexString(secretKeyHex));
-        return nativeAssetsMultisigApi.addWitness(txId, privateKey)
-
-                .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
-                        return "signature added";
-                    else {
-                        throw new RuntimeException(response.getProblem().msg());
+                        throw new RuntimeException(response.getProblem().getMsg());
                     }
                 });
     }
@@ -227,10 +202,10 @@ public class MultisigNativeAssetService {
         return nativeAssetsMultisigApi.addWitness(txId, publicKey, HexUtil.decodeHexString(signatureHex))
 
                 .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
+                    if (response.getProblem().getMsg().isEmpty())
                         return "signature added";
                     else {
-                        throw new RuntimeException(response.getProblem().msg());
+                        throw new RuntimeException(response.getProblem().getMsg());
                     }
                 });
     }
@@ -240,10 +215,10 @@ public class MultisigNativeAssetService {
         return nativeAssetsMultisigApi.getTx(txId)
 
                 .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
-                        return response.getTx().confirmations();
+                    if (response.getProblem().getMsg().isEmpty())
+                        return response.getTx().getConfirmations();
                     else {
-                        throw new RuntimeException(response.getProblem().msg());
+                        throw new RuntimeException(response.getProblem().getMsg());
                     }
                 });
     }
@@ -253,10 +228,10 @@ public class MultisigNativeAssetService {
         return nativeAssetsMultisigApi.listTxs()
 
                 .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
-                        return JavaConverters.asJava(response.transactions()).stream().map(ur -> ur.txId()).collect(Collectors.toList());
+                    if (response.getProblem().getMsg().isEmpty())
+                        return response.getTransactionsList().stream().map(ur -> ur.getTxId()).collect(Collectors.toList());
                     else {
-                        throw new RuntimeException(response.getProblem().msg());
+                        throw new RuntimeException(response.getProblem().getMsg());
                     }
                 });
     }
@@ -266,10 +241,10 @@ public class MultisigNativeAssetService {
         return nativeAssetsMultisigApi.listTxs(policyId)
 
                 .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
-                        return JavaConverters.asJava(response.transactions()).stream().map(ur -> ur.txId()).collect(Collectors.toList());
+                    if (response.getProblem().getMsg().isEmpty())
+                        return response.getTransactionsList().stream().map(ur -> ur.getTxId()).collect(Collectors.toList());
                     else {
-                        throw new RuntimeException(response.getProblem().msg());
+                        throw new RuntimeException(response.getProblem().getMsg());
                     }
                 });
     }
@@ -279,10 +254,10 @@ public class MultisigNativeAssetService {
         return nativeAssetsMultisigApi.listWitnesses(txId)
 
                 .thenApply(response -> {
-                    if (response.getProblem().msg().isEmpty())
-                        return JavaConverters.asJava(response.verKeyHashes());
+                    if (response.getProblem().getMsg().isEmpty())
+                        return response.getVerKeyHashesList();
                     else {
-                        throw new RuntimeException(response.getProblem().msg());
+                        throw new RuntimeException(response.getProblem().getMsg());
                     }
                 });
     }

@@ -30,26 +30,16 @@
         <dependency>
             <groupId>solutions.iog</groupId>
             <artifactId>store-and-hash-client_2.13</artifactId>
-            <version>0.3.0</version>
+            <version>0.3.1</version>
         </dependency>
         <dependency>
             <groupId>solutions.iog</groupId>
             <artifactId>metadata-client_2.13</artifactId>
-            <version>0.3.0</version>
+            <version>0.3.1</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>solutions.iog</groupId>
-            <artifactId>store-and-hash-client_2.13</artifactId>
-            <version>0.3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>solutions.iog</groupId>
-            <artifactId>metadata-client_2.13</artifactId>
-            <version>0.3.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.typesafe/config -->

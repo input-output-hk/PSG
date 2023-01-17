@@ -13,7 +13,6 @@ public class NativePolicyConverter implements Converter<Policy, NativePolicy> {
                 .policyId(policy.policyId())
                 .name(policy.name())
                 .paymentAddress(policy.paymentAddress())
-                .paymentAddressAmount(policy.paymentAddressAmount())
                 .build();
     }
 }

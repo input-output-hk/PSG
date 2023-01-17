@@ -13,30 +13,33 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-public class NativeAssetsApplication implements WebMvcConfigurer  {
+public class NativeAssetsApplication implements WebMvcConfigurer {
 
-	@Value("${clientId}")
-	private String clientId;
-	@Value("${token}")
-	private String token;
+    @Value("${clientId}")
+    private String clientId;
+    @Value("${token}")
+    private String token;
 
-	@Bean
-	public NativeAssetsApi nativeAssetsApi() {
-		Config config = ConfigFactory.defaultApplication()
-				.getConfig("akka.grpc.client.test")
-				.resolve();
-		return NativeAssetsBuilder.create(config).build();
-	}
-	@Bean
-	public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
-		Config config = ConfigFactory.defaultApplication()
-				.getConfig("akka.grpc.client.test")
-				.resolve();
-		return NativeAssetsBuilder.create(config).buildMultisig();
-	}
+    @Bean
+    public NativeAssetsApi nativeAssetsApi() {
+//		Config config = ConfigFactory.defaultApplication()
+//				.getConfig("akka.grpc.client.test")
+//				.resolve();
+//		return NativeAssetsBuilder.create(config).build();
+        return NativeAssetsBuilder.create(token, clientId).build();
+    }
 
-	public static void main(String[] args) throws JsonProcessingException {
-		SpringApplication.run(NativeAssetsApplication.class, args);
-	}
+    @Bean
+    public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
+//		Config config = ConfigFactory.defaultApplication()
+//				.getConfig("akka.grpc.client.test")
+//				.resolve();
+//		return NativeAssetsBuilder.create(config).buildMultisig();
+        return NativeAssetsBuilder.create(token, clientId).buildMultisig();
+    }
+
+    public static void main(String[] args) throws JsonProcessingException {
+        SpringApplication.run(NativeAssetsApplication.class, args);
+    }
 
 }

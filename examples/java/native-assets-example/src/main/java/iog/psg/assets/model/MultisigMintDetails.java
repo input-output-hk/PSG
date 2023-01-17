@@ -1,6 +1,6 @@
 package iog.psg.assets.model;
 
-import com.google.protobuf.struct.Value;
+import com.google.protobuf.Value;
 import lombok.Builder;
 import lombok.Data;
 

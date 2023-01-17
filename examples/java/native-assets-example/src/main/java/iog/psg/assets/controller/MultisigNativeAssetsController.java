@@ -37,20 +37,6 @@ public class MultisigNativeAssetsController {
                 .thenApply(p -> conversionService.convert(p, MultisigPolicy.class));
     }
 
-
-    @PostMapping("/policies/{name}/skey/{sKey}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public CompletableFuture<MultisigPolicy> createPolicySecKey(
-            @PathVariable String name,
-            @PathVariable String sKey,
-            @RequestParam(required = false) Integer beforeSlot,
-            @RequestParam(required = false) Integer afterSlot) throws CborSerializationException {
-        return multisigNativeAssetService.createPolicyWithSecKeys(
-                        name, sKey, Optional.ofNullable(beforeSlot), Optional.ofNullable(afterSlot))
-                .toCompletableFuture()
-                .thenApply(p -> conversionService.convert(p, MultisigPolicy.class));
-    }
-
     @GetMapping("/policies/id/{policyId}")
     public CompletableFuture<MultisigPolicy> getPolicyById(@PathVariable String policyId) {
         return multisigNativeAssetService.getPolicyById(policyId)
@@ -135,15 +121,6 @@ public class MultisigNativeAssetsController {
         return multisigNativeAssetService.addWitnessWithPublicKey(txId, vKey, sig)
                 .toCompletableFuture();
     }
-
-    @PostMapping("/witnesses/{txId}/{sKey}")
-    public CompletionStage<String> addWitnessPubKeyKey(
-            @PathVariable String txId,
-            @PathVariable String sKey) throws CborSerializationException {
-        return multisigNativeAssetService.addWitnessWithSecretKey(txId, sKey)
-                .toCompletableFuture();
-    }
-
 
     @GetMapping("/witnesses/{txId}")
     public CompletionStage<List<String>> witnesses(@PathVariable String txId) {
