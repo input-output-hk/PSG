@@ -1,8 +1,5 @@
 package iog.psg.assets;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import iog.psg.client.nativeassets.NativeAssetsApi;
 import iog.psg.client.nativeassets.NativeAssetsBuilder;
 import iog.psg.client.nativeassets.multisig.v1.NativeAssetsMultisigApi;
@@ -22,23 +19,15 @@ public class NativeAssetsApplication implements WebMvcConfigurer {
 
     @Bean
     public NativeAssetsApi nativeAssetsApi() {
-//		Config config = ConfigFactory.defaultApplication()
-//				.getConfig("akka.grpc.client.test")
-//				.resolve();
-//		return NativeAssetsBuilder.create(config).build();
         return NativeAssetsBuilder.create(token, clientId).build();
     }
 
     @Bean
     public NativeAssetsMultisigApi nativeAssetsMultisigApi() {
-//		Config config = ConfigFactory.defaultApplication()
-//				.getConfig("akka.grpc.client.test")
-//				.resolve();
-//		return NativeAssetsBuilder.create(config).buildMultisig();
         return NativeAssetsBuilder.create(token, clientId).buildMultisig();
     }
 
-    public static void main(String[] args) throws JsonProcessingException {
+    public static void main(String[] args) {
         SpringApplication.run(NativeAssetsApplication.class, args);
     }
 

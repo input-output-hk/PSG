@@ -55,8 +55,6 @@ $ java -jar target/native-assets-0.0.1-SNAPSHOT.jar
 ### Multisig Native Asset service example
 - Create Policy with `policyName` and `public key`:
 - ```$ curl -X POST "http://localhost:8181/multisig/policies/{name}/vkey/{vkey}"```
-- Create Policy with `policyName` and `secret key`:
-- ```$ curl -X POST "http://localhost:8181/multisig/policies/{name}/skey/{sKey}"```
 - Get Policy with `policyId`:
 - ```$ curl -X GET "http://localhost:8181/multisig/policies/id/{policyId}"```
 - Get Policy with `policyName`:
@@ -71,8 +69,6 @@ $ java -jar target/native-assets-0.0.1-SNAPSHOT.jar
 - ```$ curl -X POST "http://localhost:8181/multisig/burn"  -H "Content-Type: application/json"  -d ' {"name": "${AssetName}","policyId": "${policyId}", "targetAddress": "${targetAddress}", "amount": 10}'```
 - Create Transfer Transaction for Asset with json containing `assetName` and `policyId`, addresses `fromAddress` and `targetAddress` and specified transfer `amount`
 - ```$ curl -X POST "http://localhost:8181/multisig/transfer"  -H "Content-Type: application/json"  -d ' {"name": "${AssetName}","policyId": "${policyId}",  "fromAddress": "${fromAddress}", "targetAddress": "${targetAddress}", "amount": 10}'```
-- Add Witness with private key `sKey` for transaction defined by `txId`
-- ```$ curl -X POST "http://localhost:8181/multisig/witnesses/{txId/{sKey}"```
 - Add Witness with public key `vKey` and signature `sig` for transaction defined by`txId`
 - ```$ curl -X POST "http://localhost:8181/multisig/witnesses/{txId/{vKey}/{sig}"```
 - List all Witnesses for transaction `txId`

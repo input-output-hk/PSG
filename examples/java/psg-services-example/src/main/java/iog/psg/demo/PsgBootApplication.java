@@ -1,8 +1,5 @@
 package iog.psg.demo;
 
-import io.grpc.CallOptions;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import iog.psg.service.metadata.client.Metadata;
 import iog.psg.service.metadata.client.MetadataBuilder;
 import iog.psg.service.storeandhash.client.StoreAndHash;
@@ -27,11 +24,7 @@ public class PsgBootApplication implements WebMvcConfigurer {
 
     @Bean
     public Metadata metadata() {
-//        ManagedChannel managedChannel  = ManagedChannelBuilder.forAddress(host, port)
-//                .usePlaintext()
-//                .build();
         return  MetadataBuilder.create(token, clientId)
-//                .withManagedChannel(managedChannel)
                 .build();
     }
     @Bean
