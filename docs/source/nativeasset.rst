@@ -12,7 +12,7 @@ Currently there are 2 set of APIs.
   - Non-custodial Native Assets APIs
 Both provides a set of methods for working with native assets.
 
-Additionally, you can get an initial overview of the API by checking `Native Assets Client <https://psg-releases.s3.us-east-2.amazonaws.com/native-assets-client-0.3.12.zip>`_ - commandline tool.
+Additionally, you can get an initial overview of the API by checking `Native Assets Client <https://psg-releases.s3.us-east-2.amazonaws.com/native-assets-client-0.3.1.zip>`_ - commandline tool.
 
 **Custodial Native Assets - Supported operations:**
  - Create, get, delete and list policies
