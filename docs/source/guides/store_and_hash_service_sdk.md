@@ -1,7 +1,7 @@
 # Client SDK API - How to
 
 ## maven dependency
-* Replace `${latest.version}` with latest version from maven central (https://search.maven.org/search?q=a:store-and-hash-client_2.13)
+* Replace `${latest.version}` with latest version from maven central (https://central.sonatype.dev/artifact/solutions.iog/store-and-hash-client_2.13/0.3.1/versions)
 ```xml
 <dependency>
     <groupId>solutions.iog</groupId>

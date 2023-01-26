@@ -87,7 +87,7 @@ Price List
     * Store And Hash: 1 credit
 * Email
     * Authenticate Email: 15 credits
-* Native Assets service
+* Custodial Native Assets service
     * Create / Delete Policy: 5 credits
     * Get Policy / List Policies: 1 credit
     * Import Policy: 5 credits
@@ -99,3 +99,12 @@ Price List
     * Burn Asset: 25 credits
     * Perform Airdrop (per NFT): 25 credits
     * Check Airdrop Status: 1 credit
+* Non-Custodial Native assets:
+    * Create / Delete Policy: 5 credits
+    * Get Policy / List Policies: 1 credit
+    * Mint Asset: 150 credits
+    * Transfer Asset: 150 credits
+    * Burn Asset: 150 credits
+    * Add witness / List witnesses: 1 credit
+    * Send transaction: 25 credits
+    * Get transaction/ List transactions: 1 credit

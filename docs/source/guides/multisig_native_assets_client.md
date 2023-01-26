@@ -1,4 +1,4 @@
-# Multisig Native Assets Client - User Guide
+# Multisig Native Assets CLI - User Guide
 
 This document describes usage of Multisig Native Assets Client.  
 
@@ -8,7 +8,7 @@ Native Assets Client wraps the work of **minting**, **transferring**, and **burn
 on the Cardano blockchain the form of a java command-line tool. It also support the **minting** and **burning** with multiple signatures
 
 ## Installation:
-- Download the latest version from the [repository](https://psg-releases.s3.us-east-2.amazonaws.com/native-assets-client-0.3.19-RC6.zip)
+- Download the latest version from the [repository](https://psg-releases.s3.us-east-2.amazonaws.com/native-assets-client-0.3.1.zip)
 - Unzip it into a folder
 - Set `clientId` and`apiKey` at `/conf/application.conf` to the ones from Self Serve UI
 - Set `host`, `port` for testnet or mainnet environments
@@ -18,7 +18,7 @@ sudo chmod +x /bin/native-assets-client
 ```
 - Run client from the command line
 ```bash
-./bin/native-assets-client -COMMAND
+./bin/native-assets-client -multisig -COMMAND
 ```
 
 where COMMAND - one of the supported ones
