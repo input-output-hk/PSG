@@ -29,6 +29,8 @@
     }
 ```    
 
+Limitation: Does not support retrieving Metadata with top level keys [Cardano transaction metadata](https://developers.cardano.org/docs/transaction-metadata/) greater than 10<sup>15</sup>.
+
 ### Get the Metadata
 * Replace `txId` with the Id Transaction
 ```java
@@ -40,6 +42,7 @@
 
     }
 ```
+Limitation: Does not support retrieving Metadata with top level keys [Cardano transaction metadata](https://developers.cardano.org/docs/transaction-metadata/) greater than 10<sup>15</sup>.
 
 ### List the Metadata transaction statuses
 * Replace `startAt` with timestamp from which metadata should be listed
