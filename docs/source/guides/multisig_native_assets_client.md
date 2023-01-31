@@ -8,9 +8,10 @@ Native Assets Client wraps the work of **minting**, **transferring**, and **burn
 on the Cardano blockchain the form of a java command-line tool. It also support the **minting** and **burning** with multiple signatures
 
 ## Installation:
-- Download the latest version from the [repository](https://psg-releases.s3.us-east-2.amazonaws.com/native-assets-client-0.3.1.zip)
+- Download the latest version from the [repository](https://psg-releases.s3.us-east-2.amazonaws.com/native-assets-client-0.3.2.zip)
 - Unzip it into a folder
 - Set `clientId` and`apiKey` at `/conf/application.conf` to the ones from Self Serve UI
+- Set `network` to `preprod` for testnet environment at `/conf/application.conf` (`mainnet` by default)
 - Set `host`, `port` for testnet or mainnet environments
 - Make native asset client executable
 ```bash
